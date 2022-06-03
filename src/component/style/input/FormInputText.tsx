@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
-import {FormInputTextProps} from '@app/type/style/form/FormInputTextProps';
 import {EyeCloseIcon} from '@app/component/icon/EyeCloseIcon';
 import {EyeOpenIcon} from '@app/component/icon/EyeOpenIcon';
+import {FormInputTextProps} from '@app/type/style/input/FormInputTextProps';
 
 export const FormInputText: FC<FormInputTextProps> = (props: FormInputTextProps) => {
   const [type, setType] = useState(props.type);
@@ -16,7 +16,7 @@ export const FormInputText: FC<FormInputTextProps> = (props: FormInputTextProps)
       <input
         role={'presentation'}
         autoComplete="off"
-        className={`focus:outline-none focus:border-primary pl-10 pr-8 w-full text-sm border-solid border border-dark/50 rounded py-2 bg-sky-blue ${props.extraClass}`}
+        className={`ease-out duration-300 focus:outline-none focus:border-primary pl-10 pr-8 w-full text-sm border-solid border border-dark/50 rounded py-2 bg-sky-blue ${props.extraClass}`}
         id={props.id}
         type={type}
         placeholder={props.placeholder}

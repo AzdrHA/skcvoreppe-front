@@ -5,6 +5,7 @@ const adminRoute = '/admin';
 export const routes = {
   home: home,
   login: home.concat('connexion'),
+  forgotPassword: home.concat('mot-de-passe-oublie'),
   auth: {
     base: authRoute,
   },

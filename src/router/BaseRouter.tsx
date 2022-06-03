@@ -1,11 +1,11 @@
 import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import {HomeScreen} from '@screens/HomeScreen';
-import {AdminRouter} from '@app/router/AdminRouter';
-import {AuthRouter} from '@app/router/AuthRouter';
 import {NotFound} from '@screens/Exception/NotFound';
 import {LoginScreen} from '@screens/Auth/LoginScreen';
 import {routes} from '@app/config/routes';
+import {ForgotPasswordScreen} from '@screens/Auth/ForgotPasswordScreen';
+import {ResetPasswordScreen} from '@screens/Auth/ResetPasswordScreen';
 
 export const BaseRouter = () => {
   return (
@@ -13,7 +13,10 @@ export const BaseRouter = () => {
       <Route path={'*'} element={<NotFound/>} />
       <Route path={routes.home} element={<HomeScreen/>}/>
       <Route path={routes.login} element={<LoginScreen/>}/>
-      <Route path={`${routes.admin.base}/*`} element={<AdminRouter/>} />
+      <Route path={routes.forgotPassword} element={<ForgotPasswordScreen/>}/>
+      <Route path={'/reinitialisation-de-mot-de-passe'} element={<ResetPasswordScreen/>}/>
+
+      {/* <Route path={`${routes.admin.base}/*`} element={<AdminRouter/>} />*/}
       {/* <Route path={`/*`} element={<AuthRouter/>}/>*/}
     </Routes>
   );

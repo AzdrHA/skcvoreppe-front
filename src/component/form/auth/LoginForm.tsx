@@ -6,8 +6,12 @@ import {FormLabel} from '@app/component/style/input/FormLabel';
 import {FormInputText} from '@app/component/style/input/FormInputText';
 import {EmailIcon} from '@app/component/icon/EmailIcon';
 import {LockIcon} from '@app/component/icon/LockIcon';
-import {TextLinkPrimary} from '../style/button/TextLink';
-import {ButtonPrimary} from '../style/button/Button';
+import {FormInputFeedback} from '@app/component/style/input/FormInputFeedback';
+import {routes} from '@app/config/routes';
+import {BaseForm} from '@app/component/form/BaseForm';
+import {BaseHeaderForm} from '@app/component/form/BaseHeaderForm';
+import {TextLinkPrimary} from '@app/component/style/button/TextLink';
+import {ButtonPrimary} from '@app/component/style/button/Button';
 
 export const LoginForm = () => {
   const {t} = useTranslation();
@@ -18,19 +22,8 @@ export const LoginForm = () => {
   };
 
   return (
-    <form
-      className={'shadow-[0_0px_10px_0px_rgba(0,0,0,0.25)] inline-block px-5 py-14 rounded bg-white sm:w-auto w-full sm:h-auto h-full sm:block flex flex-col justify-between'}
-      onSubmit={handleSubmit(onSubmit)}>
-
-      <div className={'header'}>
-        <div className={'title'}>
-          <h1 className={'text-4xl font-semibold uppercase'}>{t('NICE_TO_SEE_YOU_AGAIN')}</h1>
-        </div>
-        <div className={'subtitle'}>
-          <h2 className={'font-light'}>{t('LOGIN_TO_CONTINUE')}</h2>
-          <div className={'mb-8 w-full h-px bg-sky-blue-100'}/>
-        </div>
-      </div>
+    <BaseForm onSubmit={handleSubmit(onSubmit)}>
+      <BaseHeaderForm title={t('NICE_TO_SEE_YOU_AGAIN')} subtitle={t('LOGIN_TO_CONTINUE')}/>
 
       <div className={'content'}>
         <div className={'form-group'}>
@@ -46,14 +39,17 @@ export const LoginForm = () => {
                 required: t('THIS_FIELD_IS_REQUIRED'),
                 pattern: {
                   value: /\S+@\S+\.\S+/,
-                  message: 'Please enter a valid email address.',
+                  message: t('ENTER_A_VALID_EMAIL'),
                 },
               }),
             }}
-            extraClass={formState.errors.email && 'border-warning focus:border-warning'}
+            extraClass={formState.errors.email && '!border-warning !focus:border-warning'}
           />
-          {formState.errors.email &&
-          <span className={'text-xs text-warning inline-block font-medium'}>{formState.errors.email.message}</span>}
+
+          {
+            formState.errors.email &&
+            <FormInputFeedback type={'warning'}>{formState.errors.email.message}</FormInputFeedback>
+          }
         </div>
 
         <div className={'pt-8'}/>
@@ -67,10 +63,12 @@ export const LoginForm = () => {
             placeholder={'•••••••••••••••••••••'}
             required={true}
             register={{...register('password', {required: t('THIS_FIELD_IS_REQUIRED')})}}
-            extraClass={formState.errors.password && 'border-warning focus:border-warning'}
+            extraClass={formState.errors.password && '!border-warning !focus:border-warning'}
           />
-          {formState.errors.password &&
-          <span className={'text-xs text-warning inline-block font-medium'}>{formState.errors.password.message}</span>}
+          {
+            formState.errors.password &&
+            <FormInputFeedback type={'warning'}>{formState.errors.password.message}</FormInputFeedback>
+          }
         </div>
 
         <div className={'pt-8'}/>
@@ -81,7 +79,7 @@ export const LoginForm = () => {
             <label htmlFor="remember">{t('REMEMBER_ME')}</label>
           </div>
           <div className={'ml-auto'}>
-            <TextLinkPrimary to={'/'}>{t('FORGOT_PASSWORD')}</TextLinkPrimary>
+            <TextLinkPrimary to={routes.forgotPassword}>{t('FORGOT_PASSWORD')}</TextLinkPrimary>
           </div>
         </div>
       </div>
@@ -91,6 +89,6 @@ export const LoginForm = () => {
       <div className={'footer'}>
         <ButtonPrimary type={'submit'}>{t('LOG_IN')}</ButtonPrimary>
       </div>
-    </form>
+    </BaseForm>
   );
 };
