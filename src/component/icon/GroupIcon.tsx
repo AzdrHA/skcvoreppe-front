@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {IconProps} from '@components/types/IconProps';
+import {IconProps} from '@app/type/IconProps';
 
 export const GroupIcon: FC<IconProps> = (props: IconProps) => {
   return (

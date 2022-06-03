@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {IconProps} from '@components/types/IconProps';
+import {IconProps} from '@app/type/IconProps';
 
 export const TwitterIcon: FC<IconProps> = (props: IconProps) => {
   return (

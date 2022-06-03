@@ -1,4 +1,3 @@
-import {routes} from '@app/config/routes';
 import {Link} from 'react-router-dom';
 import React, {FC} from 'react';
 import {ButtonLinkProps} from '@app/type/style/button/ButtonLinkProps';
@@ -8,6 +7,6 @@ export const ButtonLink: FC<ButtonLinkProps> = (props: ButtonLinkProps) => {
   return (
     <Link
       className={props.extraClass ? style.concat(' ', props.extraClass) : style}
-      to={routes.home}>{props.children}</Link>
+      to={props.to}>{props.children}</Link>
   );
 };

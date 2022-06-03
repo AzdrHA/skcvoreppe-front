@@ -1,13 +1,13 @@
 import React from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {ILoginForm} from '@app/type/form/ILoginForm';
-import {FormLabel} from '@components/form/component/FormLabel';
-import {FormInputText} from '@components/form/component/FormInputText';
 import {useTranslation} from 'react-i18next';
-import {EmailIcon} from '@components/Icons/EmailIcon';
-import {LockIcon} from '@components/Icons/LockIcon';
-import {ButtonPrimary} from '@components/style/button/Button';
-import {TextLinkPrimary} from '@components/style/button/TextLink';
+import {FormLabel} from '@app/component/style/input/FormLabel';
+import {FormInputText} from '@app/component/style/input/FormInputText';
+import {EmailIcon} from '@app/component/icon/EmailIcon';
+import {LockIcon} from '@app/component/icon/LockIcon';
+import {TextLinkPrimary} from '../style/button/TextLink';
+import {ButtonPrimary} from '../style/button/Button';
 
 export const LoginForm = () => {
   const {t} = useTranslation();
@@ -18,7 +18,8 @@ export const LoginForm = () => {
   };
 
   return (
-    <form className={'shadow-[0_0px_10px_0px_rgba(0,0,0,0.25)] inline-block px-5 py-14 rounded bg-white sm:w-auto w-full sm:h-auto h-full sm:block flex flex-col justify-between'}
+    <form
+      className={'shadow-[0_0px_10px_0px_rgba(0,0,0,0.25)] inline-block px-5 py-14 rounded bg-white sm:w-auto w-full sm:h-auto h-full sm:block flex flex-col justify-between'}
       onSubmit={handleSubmit(onSubmit)}>
 
       <div className={'header'}>
@@ -40,16 +41,19 @@ export const LoginForm = () => {
             type={'email'}
             placeholder={'exemple@exemple.com'}
             required={true}
-            register={{...register('email', {
-              required: t('THIS_FIELD_IS_REQUIRED'),
-              pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: 'Please enter a valid email address.',
-              },
-            })}}
+            register={{
+              ...register('email', {
+                required: t('THIS_FIELD_IS_REQUIRED'),
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: 'Please enter a valid email address.',
+                },
+              }),
+            }}
             extraClass={formState.errors.email && 'border-warning focus:border-warning'}
           />
-          {formState.errors.email && <span className={'text-xs text-warning inline-block font-medium'}>{formState.errors.email.message}</span>}
+          {formState.errors.email &&
+          <span className={'text-xs text-warning inline-block font-medium'}>{formState.errors.email.message}</span>}
         </div>
 
         <div className={'pt-8'}/>
@@ -65,7 +69,8 @@ export const LoginForm = () => {
             register={{...register('password', {required: t('THIS_FIELD_IS_REQUIRED')})}}
             extraClass={formState.errors.password && 'border-warning focus:border-warning'}
           />
-          {formState.errors.password && <span className={'text-xs text-warning inline-block font-medium'}>{formState.errors.password.message}</span>}
+          {formState.errors.password &&
+          <span className={'text-xs text-warning inline-block font-medium'}>{formState.errors.password.message}</span>}
         </div>
 
         <div className={'pt-8'}/>

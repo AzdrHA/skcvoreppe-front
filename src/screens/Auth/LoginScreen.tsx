@@ -1,5 +1,5 @@
 import React from 'react';
-import {LoginForm} from '@components/form/LoginForm';
+import {LoginForm} from '@app/component/form/LoginForm';
 
 export const LoginScreen = () => {
   return (

@@ -5,4 +5,5 @@ export type ButtonLinkProps = {
     isActive: boolean;
   }) => React.ReactNode);
   extraClass?: string;
+  to: string;
 }

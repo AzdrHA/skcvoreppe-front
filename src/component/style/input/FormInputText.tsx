@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {FormInputTextProps} from '@app/type/style/form/FormInputTextProps';
-import {EyeOpenIcon} from '@components/Icons/EyeOpenIcon';
-import {EyeCloseIcon} from '@components/Icons/EyeCloseIcon';
+import {EyeCloseIcon} from '@app/component/icon/EyeCloseIcon';
+import {EyeOpenIcon} from '@app/component/icon/EyeOpenIcon';
 
 export const FormInputText: FC<FormInputTextProps> = (props: FormInputTextProps) => {
   const [type, setType] = useState(props.type);

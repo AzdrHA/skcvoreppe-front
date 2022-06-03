@@ -6,7 +6,7 @@ i18n
     .init({
       resources: {
         fr: {
-          translation: require('./translations/fr.json'),
+          translation: require('./translation/fr.json'),
         },
       },
       lng: 'fr',

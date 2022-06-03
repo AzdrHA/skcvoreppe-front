@@ -1,6 +1,7 @@
 import React from 'react';
-import {ButtonLink} from '@components/style/button/ButtonLink';
 import {useTranslation} from 'react-i18next';
+import {ButtonLink} from '@app/component/style/button/ButtonLink';
+import {routes} from '@app/config/routes';
 
 export const NotFound = () => {
   const {t} = useTranslation();
@@ -13,7 +14,7 @@ export const NotFound = () => {
           <h2 className={'font-medium'}>{t('PAGE_DOES_NOT_LOAD')}</h2>
           <p>{t('DONT_WORRY_WE_WILL_SHOW_YOU_ANOTHER_WAY')}</p>
         </div>
-        <ButtonLink>{t('BACK_TO_HOME_PAGE')}</ButtonLink>
+        <ButtonLink to={routes.home}>{t('BACK_TO_HOME_PAGE')}</ButtonLink>
       </div>
     </div>
   );
