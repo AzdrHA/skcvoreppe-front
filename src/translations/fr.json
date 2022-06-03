@@ -1,0 +1,16 @@
+{
+  "BACK_TO_HOME_PAGE": "Retour vers la page d'accueil",
+  "PAGE_DOES_NOT_LOAD": "Oups votre page ne charge pas",
+  "DONT_WORRY_WE_WILL_SHOW_YOU_ANOTHER_WAY": "Pas d’inquiétude, nous allons vous indiquez un autre chemin",
+  "NICE_TO_SEE_YOU_AGAIN": "Content de te revoir",
+  "LOGIN_TO_CONTINUE": "Connectez-vous pour continuer",
+
+  "FORGOT_PASSWORD": "Mot de passe oublié ?",
+  "REMEMBER_ME": "Se souvenir de moi",
+  "LOG_IN": "Se connecter",
+
+  "EMAIL": "Adresse mail",
+  "PASSWORD": "Mot de passe",
+
+  "THIS_FIELD_IS_REQUIRED": "Ce champ est requis"
+}
