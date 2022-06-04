@@ -1,4 +1,4 @@
 export type BaseHeaderFormProps = {
   title: string;
-  subtitle: string | JSX.Element;
+  subtitle?: string | JSX.Element | undefined;
 }

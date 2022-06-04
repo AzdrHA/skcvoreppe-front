@@ -7,7 +7,7 @@ export const BaseHeaderForm: FC<BaseHeaderFormProps> = (props: BaseHeaderFormPro
       <h1 className={'text-4xl font-semibold uppercase'}>{props.title}</h1>
     </div>
     <div className={'subtitle'}>
-      <h2 className={'font-light'}>{props.subtitle}</h2>
+      {props.subtitle && <h2 className={'font-light'}>{props.subtitle}</h2>}
       <div className={'mb-8 w-full h-px bg-sky-blue-100'}/>
     </div>
   </div>;

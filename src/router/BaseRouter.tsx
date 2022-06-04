@@ -14,7 +14,7 @@ export const BaseRouter = () => {
       <Route path={routes.home} element={<HomeScreen/>}/>
       <Route path={routes.login} element={<LoginScreen/>}/>
       <Route path={routes.forgotPassword} element={<ForgotPasswordScreen/>}/>
-      <Route path={'/reinitialisation-de-mot-de-passe'} element={<ResetPasswordScreen/>}/>
+      <Route path={routes.resetPassword} element={<ResetPasswordScreen/>}/>
 
       {/* <Route path={`${routes.admin.base}/*`} element={<AdminRouter/>} />*/}
       {/* <Route path={`/*`} element={<AuthRouter/>}/>*/}

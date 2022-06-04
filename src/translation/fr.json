@@ -18,5 +18,10 @@
 
   "RESET": "Réinitialiser",
   "INVALID_LINK": "Lien invalide",
-  "INVALID_LINK_SUBTITLE": "Pour réinitialiser votre mot de passe, retourner sur la page de {{LOGIN}} et cliquer sur le lien mot de passe oublié."
+  "LOGIN": "Connexion",
+  "INVALID_LINK_SUBTITLE_PART_1": "Pour réinitialiser votre mot de passe, retourner sur la page de",
+  "INVALID_LINK_SUBTITLE_PART_2": "et cliquer sur le lien mot de passe oublié.",
+
+  "LOGIN_PAGE": "Page de connexion",
+  "HOME_PAGE": "Page d'accueil"
 }
