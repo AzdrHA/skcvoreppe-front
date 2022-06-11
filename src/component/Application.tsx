@@ -5,8 +5,8 @@ import {Footer} from '@app/component/footer/Footer';
 
 const Application: FC = () => {
   return (
-    <div>
-      <Link to={routes.login}>Connexion</Link>
+    <div className={'min-h-screen'}>
+      <Link className={'mb-auto'} to={routes.login}>Connexion</Link>
       <Footer/>
     </div>
   );

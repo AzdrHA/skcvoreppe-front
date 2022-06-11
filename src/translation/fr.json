@@ -16,6 +16,7 @@
   "THIS_FIELD_IS_REQUIRED": "Ce champ est requis.",
   "ENTER_A_VALID_EMAIL": "Veuillez saisir une adresse électronique valide.",
 
+  "UPDATE": "Modifier",
   "RESET": "Réinitialiser",
   "INVALID_LINK": "Lien invalide",
   "LOGIN": "Connexion",
@@ -23,5 +24,8 @@
   "INVALID_LINK_SUBTITLE_PART_2": "et cliquer sur le lien mot de passe oublié.",
 
   "LOGIN_PAGE": "Page de connexion",
-  "HOME_PAGE": "Page d'accueil"
+  "HOME_PAGE": "Page d'accueil",
+
+  "CHANGE_PASSWORD_PAGE_TITLE": "God, yarr.",
+  "CHANGE_PASSWORD_PAGE_SUBTITLE": "Instead of blending smooth ice water with peanut butter, use eight peaces peanut sauce and five pounds cinnamon cooker."
 }

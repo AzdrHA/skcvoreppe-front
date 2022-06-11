@@ -7,6 +7,7 @@ export const routes = {
   login: home.concat('connexion'),
   forgotPassword: home.concat('mot-de-passe-oublie'),
   resetPassword: home.concat('reinitialisation-de-mot-de-passe'),
+  changePassword: home.concat('modifer-le-mot-de-passe-oublie'),
   auth: {
     base: authRoute,
   },

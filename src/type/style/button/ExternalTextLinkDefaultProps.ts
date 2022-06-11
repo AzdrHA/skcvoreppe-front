@@ -4,6 +4,10 @@ export type ExternalTextLinkDefaultProps = {
   children?: React.ReactNode | ((props: {
     isActive: boolean;
   }) => React.ReactNode);
-  extraClass?: string;
+  beforeIcon?: React.ReactNode | ((props: {
+    isActive: boolean;
+  }) => React.ReactNode);
+  extraClass?: string | undefined;
   to: string;
+  hiddenExternalLink?: boolean | undefined;
 }
