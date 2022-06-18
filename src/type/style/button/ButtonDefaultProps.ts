@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {MouseEventHandler} from 'react';
 
 export type ButtonDefaultProps = {
   children?: React.ReactNode | ((props: {
@@ -6,4 +6,5 @@ export type ButtonDefaultProps = {
   }) => React.ReactNode);
   extraClass?: string;
   type?: 'submit' | 'reset' | 'button' | undefined;
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }

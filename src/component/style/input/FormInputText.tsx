@@ -25,6 +25,7 @@ export const FormInputText: FC<FormInputTextProps> = (props: FormInputTextProps)
       {
         props.type === 'password' ?
           <button
+            type={'button'}
             onClick={() => setType(type === 'password' ? 'text' : 'password')}
             className={'absolute inset-y-0 right-0 w-8 flex items-center pr-1'}>
             {
