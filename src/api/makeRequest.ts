@@ -1,5 +1,4 @@
 import axios, {Method} from 'axios';
-import Cookies from 'js-cookie';
 import {ApiConfig} from '@app/config/ApiConfig';
 
 /**
@@ -16,6 +15,6 @@ export const makeRequest = (url: string, method: Method, data: any = {}, withAut
       method,
       url,
       data,
-    }).then((r) => resolve(r)).catch((e)=> reject(e)),
+    }).then((r) => resolve(r.data)).catch((e)=> reject(e)),
   );
 };

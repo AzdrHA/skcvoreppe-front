@@ -29,5 +29,6 @@
   "CHANGE_PASSWORD_PAGE_TITLE": "God, yarr.",
   "CHANGE_PASSWORD_PAGE_SUBTITLE": "Instead of blending smooth ice water with peanut butter, use eight peaces peanut sauce and five pounds cinnamon cooker.",
 
-  "BAD_PASSWORD_OR_EMAIL": "Mauvais identifiant ou mot de passe."
+  "BAD_PASSWORD_OR_EMAIL": "Mauvais identifiant ou mot de passe.",
+  "ACCOUNT_NOT_FOUND": "Impossible de trouver votre compte"
 }

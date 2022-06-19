@@ -1,7 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {ILoginForm} from '@app/type/form/ILoginForm';
 import {BaseForm} from '@app/component/form/BaseForm';
 import {BaseHeaderForm} from '@app/component/form/BaseHeaderForm';
 import {FormLabel} from '@app/component/style/input/FormLabel';
@@ -9,13 +8,19 @@ import {FormInputText} from '@app/component/style/input/FormInputText';
 import {EmailIcon} from '@app/component/icon/EmailIcon';
 import {FormInputFeedback} from '@app/component/style/input/FormInputFeedback';
 import {ButtonPrimary} from '@app/component/style/button/Button';
+import {authForgotPasswordRequest} from '@app/api/authRequest';
 
+export type IForgotPasswordFormData = {email: string, accountNotFound: string}
 export const ForgotPasswordForm = () => {
   const {t} = useTranslation();
-  const {register, formState, handleSubmit} = useForm<ILoginForm>();
+  const {register, formState, handleSubmit, setError, clearErrors} = useForm<IForgotPasswordFormData>();
 
-  const onSubmit: SubmitHandler<ILoginForm> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IForgotPasswordFormData> = (data) => {
+    authForgotPasswordRequest(data).then((r) => {
+      console.log('res');
+    }).catch((err) => {
+      setError('accountNotFound', {type: 'custom', message: t('ACCOUNT_NOT_FOUND')});
+    });
   };
 
   return (
@@ -52,8 +57,12 @@ export const ForgotPasswordForm = () => {
 
       <div className={'pt-8'}/>
 
+      {
+        formState.errors.accountNotFound && <p className={'text-danger text-center pb-1'}>{formState.errors.accountNotFound.message}</p>
+      }
+
       <div className={'footer'}>
-        <ButtonPrimary type={'submit'}>{t('RESET')}</ButtonPrimary>
+        <ButtonPrimary onClick={() => clearErrors('accountNotFound')} type={'submit'}>{t('RESET')}</ButtonPrimary>
       </div>
     </BaseForm>
   );

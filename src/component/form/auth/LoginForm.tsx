@@ -22,7 +22,7 @@ export const LoginForm = () => {
     authLoginRequest(data).then((r) => {
       console.log(r);
     }).catch((e) => {
-      setError('invalidLogin', {type: 'custom', message: 'custom message'});
+      setError('invalidLogin', {type: 'custom', message: t('BAD_PASSWORD_OR_EMAIL')});
     });
   };
 
@@ -92,8 +92,9 @@ export const LoginForm = () => {
       <div className={'pt-8'}/>
 
       {
-        formState.errors.invalidLogin && <p className={'text-danger text-center pb-1'}>{t('BAD_PASSWORD_OR_EMAIL')}</p>
+        formState.errors.invalidLogin && <p className={'text-danger text-center pb-1'}>{formState.errors.invalidLogin.message}</p>
       }
+
       <div className={'footer'}>
         <ButtonPrimary onClick={() => clearErrors('invalidLogin')} type={'submit'}>{t('LOG_IN')}</ButtonPrimary>
       </div>
