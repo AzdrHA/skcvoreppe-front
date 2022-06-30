@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import {FormLabel} from '@app/component/style/input/FormLabel';
@@ -13,8 +13,11 @@ import {TextLinkPrimary} from '@app/component/style/button/TextLink';
 import {ButtonPrimary} from '@app/component/style/button/Button';
 import {authLoginRequest} from '@app/api/authRequest';
 import {ILoginFormData} from '@app/type/form/ILoginFormData';
+import {useSearchParams} from 'react-router-dom';
+import {ButtonLink} from '@app/component/style/button/ButtonLink';
 
 export const LoginForm = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const {t} = useTranslation();
   const {register, formState, handleSubmit, setError, clearErrors} = useForm<ILoginFormData>();
 
@@ -97,6 +100,14 @@ export const LoginForm = () => {
 
       <div className={'footer'}>
         <ButtonPrimary onClick={() => clearErrors('invalidLogin')} type={'submit'}>{t('LOG_IN')}</ButtonPrimary>
+
+        <ButtonLink extraClass={'mt-2'} to={
+          {
+            pathname: routes.login,
+            search: `?type=${searchParams.get('type') === 'administrateur' ? 'adherent' : 'administrateur'}`,
+          }
+        }>{searchParams.get('type') === 'administrateur' ? 'Espace Adhérent' : 'Espace Administrateur'}</ButtonLink>
+
       </div>
     </BaseForm>
   );
