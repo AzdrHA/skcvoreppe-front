@@ -16,7 +16,7 @@ export const FormInputText: FC<FormInputTextProps> = (props: FormInputTextProps)
       <input
         role={'presentation'}
         autoComplete="off"
-        className={`ease-out duration-300 focus:outline-none focus:border-primary pl-10 pr-8 w-full text-sm border-solid border border-dark/50 rounded py-2 bg-sky-blue ${props.extraClass}`}
+        className={`ease-out duration-300 focus:outline-none focus:border-primary pl-10 ${props.type === 'password' ? 'pr-8' : 'pr-1'} w-full text-sm border-solid border border-dark/50 rounded py-2 bg-sky-blue ${props.extraClass}`}
         id={props.id}
         type={type}
         placeholder={props.placeholder}

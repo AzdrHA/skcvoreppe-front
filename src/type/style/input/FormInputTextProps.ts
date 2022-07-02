@@ -1,5 +1,5 @@
 export type FormInputTextProps = {
-  type: 'text' | 'password' | 'email';
+  type: 'text' | 'password' | 'email' | 'date';
   required?: boolean;
   placeholder?: string;
   id: string;

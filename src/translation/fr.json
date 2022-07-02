@@ -4,6 +4,8 @@
   "DONT_WORRY_WE_WILL_SHOW_YOU_ANOTHER_WAY": "Pas d’inquiétude, nous allons vous indiquez un autre chemin.",
   "NICE_TO_SEE_YOU_AGAIN": "Content de te revoir",
   "LOGIN_TO_CONTINUE": "Connectez-vous pour continuer",
+  "SIGN_UP_TO_CONTINUE": "Inscrivez-vous pour continuer",
+  "SIGN_UP": "Inscription",
 
   "FORGOT_PASSWORD": "Mot de passe oublié ?",
   "FORGOT_PASSWORD_SUBTITLE": "Entrer l’adresse mail associer avec votre compte and vous recevrez un mail avec les instructions pour réinitialiser votre mot de passe.",
@@ -12,6 +14,17 @@
 
   "EMAIL": "Adresse mail",
   "PASSWORD": "Mot de passe",
+  "REGISTER_PASSWORD": "Votre mot de passe",
+  "REGISTER_CONFIRM_PASSWORD": "Confirmez votre mot de passe",
+  "YOUR_GENDER": "Votre sex",
+  "ENTER_A_DATE_OF_BIRTH_TO_START": "Renseigner une date de naissance pour commencer",
+  "FIRSTNAME": "Prenom",
+  "LASTNAME": "Nom",
+
+  "DATE_OF_BIRT_OF_MEMBER": "Date de naissance du nouveau adhérent",
+  "YOUR_DATE_OF_BIRTH": "Votre Date de naissance",
+  "DATE_OF_BIRTH_OF_CHILD": "Date de naissance de l'enfant",
+  "AGE_OF_MEMBER_MUST_BE_GREATER_X_YEARS": "L'âge de l'adhérent doit être supérieur à {{AGE}} ans",
 
   "THIS_FIELD_IS_REQUIRED": "Ce champ est requis.",
   "ENTER_A_VALID_EMAIL": "Veuillez saisir une adresse électronique valide.",

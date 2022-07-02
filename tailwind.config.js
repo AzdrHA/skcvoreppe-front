@@ -13,6 +13,7 @@ module.exports = {
       'sky-blue': '#F6F9FB',
       'sky-blue-100': '#EDF2F7',
       'dark': '#26272B',
+      'info': '#148fa2',
     },
     extend: {
       colors: colors,

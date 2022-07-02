@@ -15,13 +15,21 @@ import {authLoginRequest} from '@app/api/authRequest';
 import {ILoginFormData} from '@app/type/form/ILoginFormData';
 import {useSearchParams} from 'react-router-dom';
 import {ButtonLink} from '@app/component/style/button/ButtonLink';
+import {LoginAreaTypeEnum} from '@app/type/enum/LoginAreaTypeEnum';
 
 export const LoginForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams({type: LoginAreaTypeEnum.MEMBER});
   const {t} = useTranslation();
   const {register, formState, handleSubmit, setError, clearErrors} = useForm<ILoginFormData>();
 
+  useEffect(() => {
+    if (searchParams.has('type') && ![LoginAreaTypeEnum.MEMBER, LoginAreaTypeEnum.ADMIN].includes(searchParams.get('type') as LoginAreaTypeEnum)) {
+      setSearchParams({type: LoginAreaTypeEnum.MEMBER});
+    }
+  }, []);
+
   const onSubmit: SubmitHandler<ILoginFormData> = (data) => {
+    data.type = searchParams.get('type') as LoginAreaTypeEnum;
     authLoginRequest(data).then((r) => {
       console.log(r);
     }).catch((e) => {
@@ -56,7 +64,7 @@ export const LoginForm = () => {
 
           {
             formState.errors.email &&
-            <FormInputFeedback type={'warning'}>{formState.errors.email.message}</FormInputFeedback>
+              <FormInputFeedback type={'warning'}>{formState.errors.email.message}</FormInputFeedback>
           }
         </div>
 
@@ -75,7 +83,7 @@ export const LoginForm = () => {
           />
           {
             formState.errors.password &&
-            <FormInputFeedback type={'warning'}>{formState.errors.password.message}</FormInputFeedback>
+              <FormInputFeedback type={'warning'}>{formState.errors.password.message}</FormInputFeedback>
           }
         </div>
 
@@ -100,14 +108,15 @@ export const LoginForm = () => {
 
       <div className={'footer'}>
         <ButtonPrimary onClick={() => clearErrors('invalidLogin')} type={'submit'}>{t('LOG_IN')}</ButtonPrimary>
-
         <ButtonLink extraClass={'mt-2'} to={
           {
             pathname: routes.login,
-            search: `?type=${searchParams.get('type') === 'administrateur' ? 'adherent' : 'administrateur'}`,
+            search: `?type=${searchParams.get('type') === LoginAreaTypeEnum.ADMIN ? LoginAreaTypeEnum.MEMBER : LoginAreaTypeEnum.ADMIN}`,
           }
-        }>{searchParams.get('type') === 'administrateur' ? 'Espace Adhérent' : 'Espace Administrateur'}</ButtonLink>
-
+        }>{searchParams.get('type') === LoginAreaTypeEnum.ADMIN ? 'Espace Adhérent' : 'Espace Administrateur'}</ButtonLink>
+        {
+          searchParams.get('type') === LoginAreaTypeEnum.MEMBER && <span className={'block text-center mt-2'}>Pas encore de compte ? <TextLinkPrimary to={routes.register}>inscrivez-vous</TextLinkPrimary></span>
+        }
       </div>
     </BaseForm>
   );

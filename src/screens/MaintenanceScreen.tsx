@@ -1,6 +1,7 @@
 import React from 'react';
 import {ButtonLink} from '@app/component/style/button/ButtonLink';
 import {routes} from '@app/config/routes';
+import {LoginAreaTypeEnum} from '@app/type/enum/LoginAreaTypeEnum';
 
 export const MaintenanceScreen = () => {
   return (
@@ -12,12 +13,12 @@ export const MaintenanceScreen = () => {
         </div>
         <ButtonLink to={{
           pathname: routes.login,
-          search: '?type=administrateur',
+          search: `?type=${LoginAreaTypeEnum.ADMIN}`,
         }}>{'Se connecter pour les admin'}</ButtonLink>
 
         <ButtonLink to={{
           pathname: routes.login,
-          search: '?type=adherent',
+          search: `?type=${LoginAreaTypeEnum.MEMBER}`,
         }}>{'Accès espace Adhérent'}</ButtonLink>
       </div>
     </div>
