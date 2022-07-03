@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+@font-face {
+  font-family: 'KulminoituvaRegular';
+  src: url('http://www.miketaylr.com/f/kulminoituva.ttf');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
 * {
   font-family: 'Montserrat', sans-serif;
@@ -16,4 +22,8 @@
 .partner-icon-svg {
   width: auto;
   height: 65px;
+}
+
+.form-group {
+  width: 100%;
 }

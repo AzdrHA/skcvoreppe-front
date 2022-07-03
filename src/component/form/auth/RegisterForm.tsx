@@ -1,6 +1,6 @@
 import {BaseForm} from '@app/component/form/BaseForm';
 import {BaseHeaderForm} from '@app/component/form/BaseHeaderForm';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import {FormLabel} from '@app/component/style/input/FormLabel';
@@ -8,19 +8,7 @@ import {FormInputText} from '@app/component/style/input/FormInputText';
 import {FormInputFeedback} from '@app/component/style/input/FormInputFeedback';
 import {LockIcon} from '@app/component/icon/LockIcon';
 import {AppConfig} from '@app/config/AppConfig';
-import {EmailIcon} from '@app/component/icon/EmailIcon';
-import {CallPhone} from '@app/component/icon/CallPhone';
-import {Select} from '@app/component/style/Select';
-
-export enum GenderEnum {
-  female = 'Femme',
-  male = 'Homme',
-  non_binary = 'Non-binaire',
-  transgender = 'Transgenres',
-  intersex = 'Intersexe',
-  let_me_type = 'Laissez-moi taper',
-  not_saying = 'Je préfère ne pas le dire'
-}
+import {ButtonPrimary} from '@app/component/style/button/Button';
 
 export type RegisterFormData = {
   firstname: string;
@@ -29,52 +17,60 @@ export type RegisterFormData = {
   email: string;
   password: string;
   confirmPassword: string;
-  gender: GenderEnum;
   date: string;
 }
 
 export const RegisterForm = () => {
-  const {register, formState, handleSubmit, setError, clearErrors} = useForm<RegisterFormData>();
+  const {register, formState, handleSubmit, setError, clearErrors, errors} = useForm<RegisterFormData>();
   const {t} = useTranslation();
   const [isMajor, setMajor] = useState<'null'|'child'|'major'>('null');
+  const typeTrans = isMajor === 'child' ? 'CHILD' : 'YOUR';
+  const [step, setStep] = useState(1);
+  const [maxStep, setMaxStep] = useState<number>(isMajor === 'child' ? 2 : 1);
+  const [gender, setGender] = useState();
+
+  useState(() => {
+    console.log('cc');
+  }, []);
 
   const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
-  };
-
-  const DateOfBirthEventOnChange = (e: any) => {
-    const diff = Date.now() - new Date(e.target.value).getTime();
-    const age = Math.abs(new Date(diff).getUTCFullYear() - 1970);
-    const isMajor = age >= 18;
-    console.log(isMajor);
-    if (age < AppConfig.year_min_start) {
-      setError('date', {type: 'error', message: t('AGE_OF_MEMBER_MUST_BE_GREATER_X_YEARS', {AGE: AppConfig.year_min_start})});
-    } else {
-      clearErrors('date');
-      setMajor(isMajor ? 'major' : 'child');
-    }
+    console.log(data);
   };
 
   return (
     <BaseForm onSubmit={handleSubmit(onSubmit)}>
-      <BaseHeaderForm title={t('SIGN_UP')} subtitle={t('SIGN_UP_TO_CONTINUE')}/>
+      <BaseHeaderForm currentStep={step} maxStep={maxStep} title={t('SIGN_UP')} subtitle={t('SIGN_UP_TO_CONTINUE')}/>
 
       <div className={'content'}>
         {/* DATE OF BIRTHDAY */}
         <div className={'form-group'}>
           <FormLabel htmlFor={'date'} required={true}>{
-            isMajor === 'null' ? t('DATE_OF_BIRT_OF_MEMBER') : isMajor === 'major' ? t('YOUR_DATE_OF_BIRTH') : t('DATE_OF_BIRTH_OF_CHILD')
+            isMajor === 'null' ? t('DATE_OF_BIRT_OF_MEMBER') : t(`${typeTrans}_DATE_OF_BIRTH`)
           }</FormLabel>
+
           <FormInputText
-            icon={<LockIcon/>}
             id={'date'}
             type={'date'}
             required={true}
-            register={{
-              ...register('date', {
-                required: t('THIS_FIELD_IS_REQUIRED'),
-                onChange: DateOfBirthEventOnChange,
-              }),
-            }}
+            register={{...register('date', {
+              required: t('THIS_FIELD_IS_REQUIRED'),
+              onChange: async (e) => {
+                const diff = Date.now() - new Date(e.target.value).getTime();
+                const age = Math.abs(new Date(diff).getUTCFullYear() - 1970);
+                const isMajor = age >= 18;
+                if (age < AppConfig.year_min_start) {
+                  await clearErrors('date');
+                  await setError('date', {
+                    type: 'uwu',
+                    message: t('AGE_OF_MEMBER_MUST_BE_GREATER_X_YEARS', {AGE: AppConfig.year_min_start}),
+                  });
+                } else {
+                  clearErrors('date');
+                  setMajor(isMajor ? 'major' : 'child');
+                  setMaxStep(isMajor ? 1 : 2);
+                }
+              },
+            })}}
             extraClass={(formState.errors.date && '!border-warning !focus:border-warning')}
           />
           {
@@ -86,14 +82,14 @@ export const RegisterForm = () => {
           }
         </div>
 
-        {
-          isMajor === 'null' ?
+        {/* {
+          isMajor !== 'null' ?
             <>
               <div className={'pt-6'}/>
               <div className={'flex'}>
-                {/* LASTNAME */}
+                 LASTNAME
                 <div className={'form-group'}>
-                  <FormLabel htmlFor={'lastname'} required={true}>{t('LASTNAME')}</FormLabel>
+                  <FormLabel htmlFor={'lastname'} required={true}>{t(`${typeTrans}_LASTNAME`)}</FormLabel>
                   <FormInputText
                     // icon={<EmailIcon/>}
                     id={'lastname'}
@@ -115,9 +111,9 @@ export const RegisterForm = () => {
                 </div>
                 <div className={'mx-2'}/>
 
-                {/* FIRSTNAME */}
+                 FIRSTNAME
                 <div className={'form-group'}>
-                  <FormLabel htmlFor={'firstname'} required={true}>{t('FIRSTNAME')}</FormLabel>
+                  <FormLabel htmlFor={'firstname'} required={true}>{t(`${typeTrans}_FIRSTNAME`)}</FormLabel>
                   <FormInputText
                     // icon={<EmailIcon/>}
                     id={'firstname'}
@@ -140,15 +136,15 @@ export const RegisterForm = () => {
               </div>
 
               <div className={'pt-6'}/>
-              {/* PHONE NUMBER */}
+               PHONE NUMBER
               <div className={'form-group'}>
-                <FormLabel htmlFor={'phoneNumber'} required={true}>{t('PHONE_NUMBER')}</FormLabel>
+                <FormLabel htmlFor={'phoneNumber'} required={isMajor === 'major'}>{t(`${typeTrans}_PHONE_NUMBER`)}</FormLabel>
                 <FormInputText
                   icon={<CallPhone/>}
                   id={'phoneNumber'}
                   type={'text'}
                   placeholder={'0666666666'}
-                  required={true}
+                  required={isMajor === 'major'}
                   register={{
                     ...register('phoneNumber', {
                       required: t('THIS_FIELD_IS_REQUIRED'),
@@ -163,15 +159,15 @@ export const RegisterForm = () => {
               </div>
 
               <div className={'pt-6'}/>
-              {/* EMAIL */}
+               EMAIL
               <div className={'form-group'}>
-                <FormLabel htmlFor={'email'} required={true}>{t('EMAIL')}</FormLabel>
+                <FormLabel htmlFor={'email'} required={isMajor === 'major'}>{t(`${typeTrans}_EMAIL`)}</FormLabel>
                 <FormInputText
                   icon={<EmailIcon/>}
                   id={'email'}
                   type={'email'}
                   placeholder={'exemple@exemple.com'}
-                  required={true}
+                  required={isMajor === 'major'}
                   register={{
                     ...register('email', {
                       required: t('THIS_FIELD_IS_REQUIRED'),
@@ -192,7 +188,7 @@ export const RegisterForm = () => {
 
               <div className={'pt-6'}/>
               <div className={'flex'}>
-                {/* PASSWORD*/}
+                 PASSWORD
                 <div className={'form-group'}>
                   <FormLabel htmlFor={'password'} required={true}>{t('REGISTER_PASSWORD')}</FormLabel>
                   <FormInputText
@@ -212,7 +208,7 @@ export const RegisterForm = () => {
                 </div>
 
                 <div className={'mx-2'}/>
-                {/* CONFIRM PASSWORD*/}
+                 CONFIRM PASSWORD
                 <div className={'form-group'}>
                   <FormLabel htmlFor={'confirmPassword'} required={true}>{t('REGISTER_CONFIRM_PASSWORD')}</FormLabel>
                   <FormInputText
@@ -221,7 +217,7 @@ export const RegisterForm = () => {
                     type={'password'}
                     placeholder={'•••••••••••••••••••••'}
                     required={true}
-                    register={{...register('password', {required: t('THIS_FIELD_IS_REQUIRED')})}}
+                    register={{...register('confirmPassword', {required: t('THIS_FIELD_IS_REQUIRED')})}}
                     extraClass={(formState.errors.confirmPassword && '!border-warning !focus:border-warning')}
                   />
 
@@ -231,27 +227,19 @@ export const RegisterForm = () => {
                   }
                 </div>
               </div>
-
-              <div className={'pt-6'}/>
-              {/* GENDER */}
-              <div className={'form-group'}>
-                <FormLabel htmlFor={'gender'} required={true}>{t('YOUR_GENDER')}</FormLabel>
-                <Select options={[
-                  {value: 'chocolate', label: GenderEnum.female},
-                  {value: 'chocolate', label: GenderEnum.male},
-                  {value: 'chocolate', label: GenderEnum.non_binary},
-                  {value: 'chocolate', label: GenderEnum.transgender},
-                  {value: 'chocolate', label: GenderEnum.intersex},
-                  {value: 'chocolate', label: GenderEnum.let_me_type},
-                  {value: 'chocolate', label: GenderEnum.not_saying},
-                ]} />
-                {
-                  formState.errors.gender &&
-                    <FormInputFeedback type={'warning'}>{formState.errors.gender.message}</FormInputFeedback>
-                }
-              </div>
             </> : null
+        }*/}
+
+        <div className={'pt-6'}/>
+        <ButtonPrimary disabled={Boolean(Object.keys(formState.errors).length)} type={'button'} extraClass={'!w-auto float-right'}>S'inscrire</ButtonPrimary>
+
+        {/* {
+          isMajor === 'child' && step === 1 ? <>
+            <div className={'pt-6'}/>
+            <ButtonPrimary type={'button'} extraClass={'!w-auto float-right'}>Parti responsable légal</ButtonPrimary>
+          </> : null
         }
+*/}
       </div>
     </BaseForm>
   );
