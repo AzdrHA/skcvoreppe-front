@@ -1,26 +1,36 @@
 import React, {useEffect} from 'react';
-import {SubmitHandler, useForm} from 'react-hook-form';
-import {useTranslation} from 'react-i18next';
-import {FormLabel} from '@app/component/style/input/FormLabel';
-import {FormInputText} from '@app/component/style/input/FormInputText';
-import {EmailIcon} from '@app/component/icon/EmailIcon';
-import {LockIcon} from '@app/component/icon/LockIcon';
-import {FormInputFeedback} from '@app/component/style/input/FormInputFeedback';
-import {routes} from '@app/config/routes';
 import {BaseForm} from '@app/component/form/BaseForm';
+import {Formik, FormikHelpers} from 'formik';
+import {useTranslation} from 'react-i18next';
 import {BaseHeaderForm} from '@app/component/form/BaseHeaderForm';
+import {FormField} from '@app/component/style/input/FormField';
+import {EmailIcon} from '@app/component/icon/EmailIcon';
 import {TextLinkPrimary} from '@app/component/style/button/TextLink';
+import {routes} from '@app/config/routes';
 import {ButtonPrimary} from '@app/component/style/button/Button';
-import {authLoginRequest} from '@app/api/authRequest';
-import {ILoginFormData} from '@app/type/form/ILoginFormData';
-import {useSearchParams} from 'react-router-dom';
 import {ButtonLink} from '@app/component/style/button/ButtonLink';
 import {LoginAreaTypeEnum} from '@app/type/enum/LoginAreaTypeEnum';
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {LockIcon} from '@app/component/icon/LockIcon';
+import {authLoginRequest} from '@app/api/authRequest';
+
+export type LoginFormValues = {
+  email?: string | undefined;
+  password?: string | undefined;
+  type: string;
+  invalidLogin?: string | undefined;
+}
+
+const LoginFormInitialValues: LoginFormValues = {
+  type: '',
+  email: '',
+  password: '',
+};
 
 export const LoginForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams({type: LoginAreaTypeEnum.MEMBER});
   const {t} = useTranslation();
-  const {register, formState, handleSubmit, setError, clearErrors} = useForm<ILoginFormData>();
+  const [searchParams, setSearchParams] = useSearchParams({type: LoginAreaTypeEnum.MEMBER});
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (searchParams.has('type') && ![LoginAreaTypeEnum.MEMBER, LoginAreaTypeEnum.ADMIN].includes(searchParams.get('type') as LoginAreaTypeEnum)) {
@@ -28,96 +38,85 @@ export const LoginForm = () => {
     }
   }, []);
 
-  const onSubmit: SubmitHandler<ILoginFormData> = (data) => {
-    data.type = searchParams.get('type') as LoginAreaTypeEnum;
-    authLoginRequest(data).then((r) => {
-      console.log(r);
+  const onSubmit = (values: LoginFormValues, {setSubmitting, setErrors}: FormikHelpers<LoginFormValues>) => {
+    values.type = searchParams.get('type') as LoginAreaTypeEnum;
+    authLoginRequest(values).then((r) => {
+      return navigate(routes.admin.home);
     }).catch((e) => {
-      setError('invalidLogin', {type: 'custom', message: t('BAD_PASSWORD_OR_EMAIL')});
+      setErrors({invalidLogin: t('BAD_PASSWORD_OR_EMAIL')});
     });
+    setSubmitting(false);
   };
 
   return (
-    <BaseForm onSubmit={handleSubmit(onSubmit)}>
-      <BaseHeaderForm title={t('NICE_TO_SEE_YOU_AGAIN')} subtitle={t('LOGIN_TO_CONTINUE')}/>
+    <Formik
+      initialValues={LoginFormInitialValues}
+      onSubmit={onSubmit}
+      validateOnChange={true}
+    >
+      {(formState) => (
+        <BaseForm>
+          <BaseHeaderForm title={t('NICE_TO_SEE_YOU_AGAIN')} subtitle={t('LOGIN_TO_CONTINUE')}/>
+          <div className="content">
+            <div className="form-group">
+              <FormField
+                icon={<EmailIcon/>}
+                id={'email'}
+                type={'email'}
+                required={true}
+                label={t('EMAIL')}
+                placeholder={'exemple@exemple.com'}
+                extraClass={(formState.errors.email && '!border-warning !focus:border-warning') || (formState.errors.invalidLogin && 'border-danger')}
+              />
+            </div>
 
-      <div className={'content'}>
-        <div className={'form-group'}>
-          <FormLabel htmlFor={'email'} required={true}>{t('EMAIL')}</FormLabel>
-          <FormInputText
-            icon={<EmailIcon/>}
-            id={'email'}
-            type={'email'}
-            placeholder={'exemple@exemple.com'}
-            required={true}
-            register={{
-              ...register('email', {
-                required: t('THIS_FIELD_IS_REQUIRED'),
-                pattern: {
-                  value: /\S+@\S+\.\S+/,
-                  message: t('ENTER_A_VALID_EMAIL'),
-                },
-              }),
-            }}
-            extraClass={(formState.errors.email && '!border-warning !focus:border-warning') || (formState.errors.invalidLogin && 'border-danger')}
-          />
+            <div className={'py-3'}/>
 
-          {
-            formState.errors.email &&
-              <FormInputFeedback type={'warning'}>{formState.errors.email.message}</FormInputFeedback>
-          }
-        </div>
+            <div className="form-group">
+              <FormField
+                icon={<LockIcon/>}
+                id={'password'}
+                type={'password'}
+                label={t('PASSWORD')}
+                placeholder={'•••••••••••••••••••••'}
+                required={true}
+                extraClass={(formState.errors.email && '!border-warning !focus:border-warning') || (formState.errors.invalidLogin && 'border-danger')}
+              />
+            </div>
 
-        <div className={'pt-8'}/>
+            <div className={'py-3'}/>
 
-        <div className={'form-group'}>
-          <FormLabel htmlFor={'password'} required={true}>{t('PASSWORD')}</FormLabel>
-          <FormInputText
-            icon={<LockIcon/>}
-            id={'password'}
-            type={'password'}
-            placeholder={'•••••••••••••••••••••'}
-            required={true}
-            register={{...register('password', {required: t('THIS_FIELD_IS_REQUIRED')})}}
-            extraClass={(formState.errors.email && '!border-warning !focus:border-warning') || (formState.errors.invalidLogin && 'border-danger')}
-          />
-          {
-            formState.errors.password &&
-              <FormInputFeedback type={'warning'}>{formState.errors.password.message}</FormInputFeedback>
-          }
-        </div>
-
-        <div className={'pt-8'}/>
-
-        <div className={'form-group sm:grid grid-cols-2'}>
-          <div>
-            <input className={'mr-1'} type="checkbox" name="remember" id="remember"/>
-            <label htmlFor="remember">{t('REMEMBER_ME')}</label>
+            <div className={'form-group sm:grid grid-cols-2'}>
+              <div>
+                <input className={'mr-1'} type="checkbox" name="remember" id="remember"/>
+                <label htmlFor="remember">{t('REMEMBER_ME')}</label>
+              </div>
+              <div className={'ml-auto'}>
+                <TextLinkPrimary to={routes.forgotPassword}>{t('FORGOT_PASSWORD')}</TextLinkPrimary>
+              </div>
+            </div>
           </div>
-          <div className={'ml-auto'}>
-            <TextLinkPrimary to={routes.forgotPassword}>{t('FORGOT_PASSWORD')}</TextLinkPrimary>
-          </div>
-        </div>
-      </div>
 
-      <div className={'pt-8'}/>
+          <div className={'py-3'}/>
 
-      {
-        formState.errors.invalidLogin && <p className={'text-danger text-center pb-1'}>{formState.errors.invalidLogin.message}</p>
-      }
-
-      <div className={'footer'}>
-        <ButtonPrimary onClick={() => clearErrors('invalidLogin')} type={'submit'}>{t('LOG_IN')}</ButtonPrimary>
-        <ButtonLink extraClass={'mt-2'} to={
           {
-            pathname: routes.login,
-            search: `?type=${searchParams.get('type') === LoginAreaTypeEnum.ADMIN ? LoginAreaTypeEnum.MEMBER : LoginAreaTypeEnum.ADMIN}`,
+            formState.errors.invalidLogin && <p className={'text-danger text-center pb-1'}>{formState.errors.invalidLogin}</p>
           }
-        }>{searchParams.get('type') === LoginAreaTypeEnum.ADMIN ? 'Espace Adhérent' : 'Espace Administrateur'}</ButtonLink>
-        {
-          searchParams.get('type') === LoginAreaTypeEnum.MEMBER && <span className={'block text-center mt-2'}>Pas encore de compte ? <TextLinkPrimary to={routes.register}>inscrivez-vous</TextLinkPrimary></span>
-        }
-      </div>
-    </BaseForm>
+
+          <div className={'footer'}>
+            <ButtonPrimary type={'submit'}>{t('LOG_IN')}</ButtonPrimary>
+            <ButtonLink extraClass={'mt-2'} to={
+              {
+                pathname: routes.login,
+                search: `?type=${searchParams.get('type') === LoginAreaTypeEnum.ADMIN ? LoginAreaTypeEnum.MEMBER : LoginAreaTypeEnum.ADMIN}`,
+              }
+            }>{searchParams.get('type') === LoginAreaTypeEnum.ADMIN ? 'Espace Adhérent' : 'Espace Administrateur'}</ButtonLink>
+            {
+              searchParams.get('type') === LoginAreaTypeEnum.MEMBER && <span className={'block text-center mt-2'}>Pas encore de compte ? <TextLinkPrimary to={routes.register}>inscrivez-vous</TextLinkPrimary></span>
+            }
+          </div>
+        </BaseForm>
+      )}
+    </Formik>
   );
 };

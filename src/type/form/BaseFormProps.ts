@@ -5,5 +5,5 @@ export type BaseFormProps = {
     isActive: boolean;
   }) => React.ReactNode);
   extraClass?: string;
-  onSubmit?: FormEventHandler | undefined;
+  onSubmit?: any;
 }

@@ -21,6 +21,7 @@ module.exports = {
   ],
   'rules': {
     'max-len': 'off',
+    'no-unused-vars': 'off',
     'require-jsdoc': ['error', {
       'require': {
         'FunctionDeclaration': true,

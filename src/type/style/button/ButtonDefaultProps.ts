@@ -7,4 +7,5 @@ export type ButtonDefaultProps = {
   extraClass?: string;
   type?: 'submit' | 'reset' | 'button' | undefined;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+  disabled?: boolean | undefined;
 }

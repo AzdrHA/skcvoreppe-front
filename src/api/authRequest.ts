@@ -1,9 +1,9 @@
 import {makeRequest} from '@app/api/makeRequest';
 import {ApiConfig} from '@app/config/ApiConfig';
-import {ILoginFormData} from '@app/type/form/ILoginFormData';
 import {IForgotPasswordFormData} from '@app/component/form/auth/ForgotPasswordForm';
+import {LoginFormValues} from '@app/component/form/auth/LoginForm';
 
-export const authLoginRequest = (data: ILoginFormData) => {
+export const authLoginRequest = (data: LoginFormValues) => {
   return makeRequest(ApiConfig.auth.login, 'POST', data, false);
 };
 

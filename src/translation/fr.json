@@ -45,7 +45,7 @@
   "DATE_OF_BIRT_OF_MEMBER": "Date de naissance du nouveau adhérent",
   "AGE_OF_MEMBER_MUST_BE_GREATER_X_YEARS": "L'âge de l'adhérent doit être supérieur à {{AGE}} ans",
 
-  "THIS_FIELD_IS_REQUIRED": "Ce champ est requis.",
+  "THIS_FIELD_IS_REQUIRED": "Ce champ doit être renseigné",
   "ENTER_A_VALID_EMAIL": "Veuillez saisir une adresse électronique valide.",
 
   "UPDATE": "Modifier",
