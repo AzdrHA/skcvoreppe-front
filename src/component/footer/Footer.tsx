@@ -4,7 +4,7 @@ import {VoreppeCityIcon} from '@app/component/icon/VoreppeCityIcon';
 import {IsereDepartmentIcon} from '@app/component/icon/IsereDepartmentIcon';
 import {EmailIcon} from '@app/component/icon/EmailIcon';
 import {CallPhone} from '@app/component/icon/CallPhone';
-import {PrimaryExternalTextLink} from '@app/component/style/button/ExternalTextLink';
+import {PrimaryExternalTextLink} from '@app/component/ui/button/ExternalTextLink';
 import {AppConfig} from '@app/config/AppConfig';
 
 export const Footer = () => {

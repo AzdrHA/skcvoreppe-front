@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {ButtonLink} from '@app/component/style/button/ButtonLink';
+import {ButtonLink} from '@app/component/ui/button/ButtonLink';
 import {routes} from '@app/config/routes';
 
 export const NotFound = () => {

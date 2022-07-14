@@ -2,7 +2,7 @@ import {BaseForm} from '@app/component/form/BaseForm';
 import {BaseHeaderForm} from '@app/component/form/BaseHeaderForm';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {ButtonPrimary} from '@app/component/style/button/Button';
+import {ButtonPrimary} from '@app/component/ui/button/Button';
 
 export const ChangePasswordForm = () => {
   const {t} = useTranslation();

@@ -3,10 +3,10 @@ import {Formik, FormikHelpers} from 'formik';
 import {BaseForm} from '@app/component/form/BaseForm';
 import {useTranslation} from 'react-i18next';
 import {BaseHeaderForm} from '@app/component/form/BaseHeaderForm';
-import {FormField} from '@app/component/style/input/FormField';
+import {FormField} from '@app/component/ui/input/FormField';
 import {AppConfig} from '@app/config/AppConfig';
-import {FormFeedback} from '@app/component/style/input/FormFeedback';
-import {MultiplePassword} from '@app/component/style/input/MultiplePassword';
+import {FormFeedback} from '@app/component/ui/input/FormFeedback';
+import {MultiplePassword} from '@app/component/ui/input/MultiplePassword';
 
 interface RegisterFormValue {
   date: string;

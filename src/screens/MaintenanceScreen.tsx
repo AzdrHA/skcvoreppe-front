@@ -1,5 +1,5 @@
 import React from 'react';
-import {ButtonLink} from '@app/component/style/button/ButtonLink';
+import {ButtonLink} from '@app/component/ui/button/ButtonLink';
 import {routes} from '@app/config/routes';
 import {LoginAreaTypeEnum} from '@app/type/enum/LoginAreaTypeEnum';
 
