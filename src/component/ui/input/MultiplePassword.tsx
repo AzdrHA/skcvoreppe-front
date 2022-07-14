@@ -3,7 +3,7 @@ import {Field} from 'formik';
 import {EyeCloseIcon} from '@app/component/icon/EyeCloseIcon';
 import {EyeOpenIcon} from '@app/component/icon/EyeOpenIcon';
 import {LockIcon} from '@app/component/icon/LockIcon';
-import {FormFeedback} from '@app/component/style/input/FormFeedback';
+import {FormFeedback} from '@app/component/ui/input/FormFeedback';
 
 export type MultiplePasswordProps = {
   passwordError?: string | undefined;

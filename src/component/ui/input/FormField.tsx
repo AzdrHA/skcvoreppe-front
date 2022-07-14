@@ -1,9 +1,8 @@
 import React, {FC, useState} from 'react';
 import {ErrorMessage, Field} from 'formik';
-import {FormLabel} from '@app/component/style/input/FormLabel';
+import {FormLabel} from '@app/component/ui/input/FormLabel';
 import {EyeCloseIcon} from '@app/component/icon/EyeCloseIcon';
 import {EyeOpenIcon} from '@app/component/icon/EyeOpenIcon';
-import {FormFeedback} from '@app/component/style/input/FormFeedback';
 
 export type FormFieldProps = {
   id: string;
@@ -37,7 +36,7 @@ export const FormField: FC<FormFieldProps> = (props: FormFieldProps) => {
           name={props.id}
           type={type}
           placeholder={props.placeholder}
-          required={props.required}
+          // required={props.required}
         />
         {
           props.type === 'password' ?
