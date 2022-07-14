@@ -3,32 +3,28 @@ import {BaseForm} from '@app/component/form/BaseForm';
 import {Formik, FormikHelpers} from 'formik';
 import {useTranslation} from 'react-i18next';
 import {BaseHeaderForm} from '@app/component/form/BaseHeaderForm';
-import {FormField} from '@app/component/style/input/FormField';
+import {FormField} from '@app/component/ui/input/FormField';
 import {EmailIcon} from '@app/component/icon/EmailIcon';
-import {TextLinkPrimary} from '@app/component/style/button/TextLink';
+import {TextLinkPrimary} from '@app/component/ui/button/TextLink';
 import {routes} from '@app/config/routes';
-import {ButtonPrimary} from '@app/component/style/button/Button';
-import {ButtonLink} from '@app/component/style/button/ButtonLink';
+import {ButtonPrimary} from '@app/component/ui/button/Button';
+import {ButtonLink} from '@app/component/ui/button/ButtonLink';
 import {LoginAreaTypeEnum} from '@app/type/enum/LoginAreaTypeEnum';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import {LockIcon} from '@app/component/icon/LockIcon';
 import {authLoginRequest} from '@app/api/authRequest';
+import Cookies from 'js-cookie';
 
 export type LoginFormValues = {
   email?: string | undefined;
   password?: string | undefined;
   type: string;
-  invalidLogin?: string | undefined;
+  error?: string | undefined;
+  remember: boolean
 }
 
-const LoginFormInitialValues: LoginFormValues = {
-  type: '',
-  email: '',
-  password: '',
-};
-
 export const LoginForm = () => {
-  const {t} = useTranslation();
+  const {t} = useTranslation(['form']);
   const [searchParams, setSearchParams] = useSearchParams({type: LoginAreaTypeEnum.MEMBER});
   const navigate = useNavigate();
 
@@ -41,22 +37,31 @@ export const LoginForm = () => {
   const onSubmit = (values: LoginFormValues, {setSubmitting, setErrors}: FormikHelpers<LoginFormValues>) => {
     values.type = searchParams.get('type') as LoginAreaTypeEnum;
     authLoginRequest(values).then((r) => {
-      return navigate(routes.admin.home);
+      Cookies.set('refresh_token', r.refresh_token, {expires: values.remember ? new Date(Date.now()+ ((48*60*60)*1000)) : new Date()});
+      if (values.type === LoginAreaTypeEnum.ADMIN) {
+        return navigate(routes.admin.home);
+      }
+      return navigate(routes.home);
     }).catch((e) => {
-      setErrors({invalidLogin: t('BAD_PASSWORD_OR_EMAIL')});
+      setErrors({error: e.response.data.error});
     });
     setSubmitting(false);
   };
 
   return (
     <Formik
-      initialValues={LoginFormInitialValues}
+      initialValues={{
+        type: '',
+        email: '',
+        password: '',
+        remember: false,
+      }}
       onSubmit={onSubmit}
       validateOnChange={true}
     >
       {(formState) => (
         <BaseForm>
-          <BaseHeaderForm title={t('NICE_TO_SEE_YOU_AGAIN')} subtitle={t('LOGIN_TO_CONTINUE')}/>
+          <BaseHeaderForm title={t('TITLE.NICE_TO_SEE_YOU_AGAIN')} subtitle={t('TITLE.LOGIN_TO_CONTINUE')}/>
           <div className="content">
             <div className="form-group">
               <FormField
@@ -65,8 +70,8 @@ export const LoginForm = () => {
                 type={'email'}
                 required={true}
                 label={t('EMAIL')}
-                placeholder={'exemple@exemple.com'}
-                extraClass={(formState.errors.email && '!border-warning !focus:border-warning') || (formState.errors.invalidLogin && 'border-danger')}
+                placeholder={t('PLACEHOLDER.EMAIL')}
+                extraClass={(formState.errors.email && '!border-warning !focus:border-warning') || (formState.errors.error && 'border-danger')}
               />
             </div>
 
@@ -78,18 +83,22 @@ export const LoginForm = () => {
                 id={'password'}
                 type={'password'}
                 label={t('PASSWORD')}
-                placeholder={'•••••••••••••••••••••'}
+                placeholder={t('PLACEHOLDER.PASSWORD')}
                 required={true}
-                extraClass={(formState.errors.email && '!border-warning !focus:border-warning') || (formState.errors.invalidLogin && 'border-danger')}
+                extraClass={(formState.errors.email && '!border-warning !focus:border-warning') || (formState.errors.error && 'border-danger')}
               />
             </div>
 
             <div className={'py-3'}/>
 
             <div className={'form-group sm:grid grid-cols-2'}>
-              <div>
-                <input className={'mr-1'} type="checkbox" name="remember" id="remember"/>
-                <label htmlFor="remember">{t('REMEMBER_ME')}</label>
+              <div className="form-group">
+                <FormField
+                  id={'remember'}
+                  type={'checkbox'}
+                  label={t('REMEMBER_ME')}
+                  extraClass={(formState.errors.email && '!border-warning !focus:border-warning') || (formState.errors.error && 'border-danger')}
+                />
               </div>
               <div className={'ml-auto'}>
                 <TextLinkPrimary to={routes.forgotPassword}>{t('FORGOT_PASSWORD')}</TextLinkPrimary>
@@ -100,7 +109,7 @@ export const LoginForm = () => {
           <div className={'py-3'}/>
 
           {
-            formState.errors.invalidLogin && <p className={'text-danger text-center pb-1'}>{formState.errors.invalidLogin}</p>
+            formState.errors.error && <p className={'text-danger text-center pb-1'}>{formState.errors.error}</p>
           }
 
           <div className={'footer'}>
@@ -110,7 +119,7 @@ export const LoginForm = () => {
                 pathname: routes.login,
                 search: `?type=${searchParams.get('type') === LoginAreaTypeEnum.ADMIN ? LoginAreaTypeEnum.MEMBER : LoginAreaTypeEnum.ADMIN}`,
               }
-            }>{searchParams.get('type') === LoginAreaTypeEnum.ADMIN ? 'Espace Adhérent' : 'Espace Administrateur'}</ButtonLink>
+            }>{searchParams.get('type') === LoginAreaTypeEnum.ADMIN ? t('AREA_MEMBER') : t('AREA_ADMIN')}</ButtonLink>
             {
               searchParams.get('type') === LoginAreaTypeEnum.MEMBER && <span className={'block text-center mt-2'}>Pas encore de compte ? <TextLinkPrimary to={routes.register}>inscrivez-vous</TextLinkPrimary></span>
             }

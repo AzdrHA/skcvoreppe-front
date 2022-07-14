@@ -1,0 +1,42 @@
+{
+  "TITLE": {
+    "FORGOT_PASSWORD": "Mot de passe oublié ?",
+    "FORGOT_PASSWORD_SUBTITLE": "Entrer l’adresse mail associer avec votre compte and vous recevrez un mail avec les instructions pour réinitialiser votre mot de passe.",
+
+    "NICE_TO_SEE_YOU_AGAIN": "Content de te revoir",
+    "LOGIN_TO_CONTINUE": "Connectez-vous pour continuer",
+
+    "RESET_PASSWORD": "Réinitialisation de mon mot de passe",
+    "RESET_PASSWORD_MUST_BE_DIFFERENT": "Votre nouveau mot de passe doit être différent de l’ancien mot de passe"
+  },
+
+  "INFO": {
+    "RESET_PASSWORD_REQUEST_SEND": "La demande de réinstallation bien était prise en compte, vous recevrez un mail incessamment sous peu."
+  },
+
+  "THIS_FIELD_IS_REQUIRED": "Ce champ doit être renseigné",
+  "CONFIRM_PASSWORD_NOT_MATCH": "La confirmation de mot de passe ne concorde pas avec le nouveau mot de passe",
+
+  "PLACEHOLDER": {
+    "EMAIL": "exemple@exemple.com",
+    "PASSWORD": "•••••••••••••••••••••"
+  },
+
+  "PASSWORD_SECURE_INFO": "Pour votre sécurité votre mot de passe doit remplir les critères suivants:",
+
+  "RESET_PASSWORD_SUCCESS": "Le mot de passe a été modifier avec succès, vous allez rediriger automatique dans {{SECOND}} secondes.",
+
+  "EMAIL": "Adresse mail",
+  "RESET": "Réinitialiser",
+  "REMEMBER_ME": "Se souvenir de moi",
+  "LOG_IN": "Se connecter",
+  "FORGOT_PASSWORD": "Mot de passe oublié ?",
+  "AREA_MEMBER": "Espace Adhérant",
+  "AREA_ADMIN": "Espace Administrateur",
+
+  "PASSWORD": "Mot de passe",
+  "NEW_PASSWORD": "Nouveau mot de passe",
+  "CONFIRM_NEW_PASSWORD": "Confirmer le nouveau mot de passe",
+
+  "UPDATE_THE_PASSWORD": "Modifier le mot de passe"
+}
