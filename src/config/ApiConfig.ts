@@ -3,5 +3,8 @@ export const ApiConfig = {
   auth: {
     login: '/auth/login',
     forgotPassword: '/auth/forgot-password',
+    refreshToken: '/auth/refresh',
+    verifyToken: '/auth/verify-token',
+    resetPassword: '/auth/reset-password',
   },
 };
