@@ -22,6 +22,7 @@ module.exports = {
   'rules': {
     'max-len': 'off',
     'no-unused-vars': 'off',
+    'camelcase': 'off',
     'require-jsdoc': ['error', {
       'require': {
         'FunctionDeclaration': true,

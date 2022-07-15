@@ -13,6 +13,9 @@
   "LASTNAME": "Nom",
   "PHONE_NUMBER": "N° de téléphone",
 
+  "HOLD_UP": "Attendez !",
+  "ACCESS_NOT_ALLOWED": "Vous n'êtes pas autorisé à rentrer dans cette zone !",
+
   "YOUR_DATE_OF_BIRTH": "Votre Date de naissance",
   "YOUR_LASTNAME": "Votre nom",
   "YOUR_FIRSTNAME": "Votre prénom",

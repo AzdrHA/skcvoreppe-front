@@ -17,13 +17,8 @@ export const authForgotPasswordRequest = (data: ForgotPasswordFormInitialValuesT
   return makeRequest(ApiConfig.auth.forgotPassword, 'POST', data, false);
 };
 
-export const authRefreshTokenRequest = () => {
-  if (!Cookies.get('refresh_token')) return;
-  return makeRequest(ApiConfig.auth.refreshToken, 'POST', {
-    refresh_token: Cookies.get('refresh_token'),
-  }, false).then((r: User & TokenAuth) => {
-    Cookies.set('refresh_token', r.refresh_token);
-  });
+export const authRefreshTokenRequest = (refresh_token: string): Promise<User & TokenAuth> => {
+  return makeRequest(ApiConfig.auth.refreshToken, 'POST', {refresh_token}, false);
 };
 
 export const authVerifyTokenRequest = (data: {token: string, type: string}) => {

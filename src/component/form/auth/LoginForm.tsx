@@ -14,6 +14,9 @@ import {useNavigate, useSearchParams} from 'react-router-dom';
 import {LockIcon} from '@app/component/icon/LockIcon';
 import {authLoginRequest} from '@app/api/authRequest';
 import Cookies from 'js-cookie';
+import {cookieExpiredAt} from '@app/utils/constante';
+import {useAppDispatch} from '@app/reducer/hook';
+import {initialUser} from '@app/slice/User/UserSlice';
 
 export type LoginFormValues = {
   email?: string | undefined;
@@ -27,6 +30,7 @@ export const LoginForm = () => {
   const {t} = useTranslation(['form']);
   const [searchParams, setSearchParams] = useSearchParams({type: LoginAreaTypeEnum.MEMBER});
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (searchParams.has('type') && ![LoginAreaTypeEnum.MEMBER, LoginAreaTypeEnum.ADMIN].includes(searchParams.get('type') as LoginAreaTypeEnum)) {
@@ -37,15 +41,17 @@ export const LoginForm = () => {
   const onSubmit = (values: LoginFormValues, {setSubmitting, setErrors}: FormikHelpers<LoginFormValues>) => {
     values.type = searchParams.get('type') as LoginAreaTypeEnum;
     authLoginRequest(values).then((r) => {
-      Cookies.set('refresh_token', r.refresh_token, {expires: values.remember ? new Date(Date.now()+ ((48*60*60)*1000)) : new Date()});
+      Cookies.set('refresh_token', r.refresh_token, {expires: cookieExpiredAt});
+      dispatch(initialUser(r));
+    }).catch((e) => {
+      setErrors({error: e.response.data.error});
+    }).finally(() => {
+      setSubmitting(false);
       if (values.type === LoginAreaTypeEnum.ADMIN) {
         return navigate(routes.admin.home);
       }
       return navigate(routes.home);
-    }).catch((e) => {
-      setErrors({error: e.response.data.error});
     });
-    setSubmitting(false);
   };
 
   return (
