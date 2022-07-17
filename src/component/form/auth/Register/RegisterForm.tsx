@@ -6,144 +6,181 @@ import {BaseHeaderForm} from '@app/component/form/BaseHeaderForm';
 import {FormField} from '@app/component/ui/input/FormField';
 import {AppConfig} from '@app/config/AppConfig';
 import {FormFeedback} from '@app/component/ui/input/FormFeedback';
-import {MultiplePassword} from '@app/component/ui/input/MultiplePassword';
+import {ButtonPrimary} from '@app/component/ui/button/Button';
+import {PasswordValidation} from '@app/component/ui/PasswordValidation';
+import * as Yup from 'yup';
+import {authRegisterRequest} from '@app/api/authRequest';
+import {useNavigate} from 'react-router-dom';
+import {routes} from '@app/config/routes';
 
-interface RegisterFormValue {
-  date: string;
-  firstname: string;
-  lastname: string;
-  phoneNumber: string;
+export interface RegisterFormValue {
+  dateOfBirth: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
   email: string;
   password: string;
   confirmPassword: string;
+  error?: string | undefined;
+  passwordValidation?: string | undefined;
 }
 
 export const RegisterForm = () => {
-  const {t} = useTranslation();
-  const [isMajor, setMajor] = useState<'null' | 'child' | 'major'>('null');
-  const typeTrans = isMajor === 'child' ? 'CHILD' : 'YOUR';
-  const [step, setStep] = useState(1);
-  const [maxStep, setMaxStep] = useState<number>(isMajor === 'child' ? 2 : 1);
+  const {t} = useTranslation(['form']);
+  const navigate = useNavigate();
+  const [isSecure, setSecure] = useState(false);
+  const [isAgeValid, setAgeValid] = useState(false);
+  const [isAgeValidated, setAgeValidated] = useState(false);
   const [gender, setGender] = useState();
+  const REDIRECT_TIME = 3;
+
+  const checkPassword = (isValid: boolean) => {
+    if (isSecure !== isValid) {
+      setSecure(isValid);
+    }
+  };
 
   return (
     <Formik
       initialValues={{
-        date: '',
-        firstname: '',
-        lastname: '',
+        dateOfBirth: '',
+        firstName: '',
+        lastName: '',
         email: '',
-        phoneNumber: '',
+        phone: '',
         password: '',
         confirmPassword: '',
       } as RegisterFormValue}
+      validationSchema={
+        Yup.object().shape({
+          dateOfBirth: Yup.string().required(t('WARNING.THIS_FIELD_IS_REQUIRED')),
+          firstName: Yup.string().required(t('WARNING.THIS_FIELD_IS_REQUIRED')),
+          lastName: Yup.string().required(t('WARNING.THIS_FIELD_IS_REQUIRED')),
+          email: Yup.string().required(t('WARNING.THIS_FIELD_IS_REQUIRED')).email('WARNING.ENTER_A_VALID_EMAIL'),
+          phone: Yup.string().required(t('WARNING.THIS_FIELD_IS_REQUIRED')),
+          password: Yup.string()
+              .required(t('WARNING.THIS_FIELD_IS_REQUIRED')),
+          confirmPassword: Yup.string().required(t('WARNING.THIS_FIELD_IS_REQUIRED'))
+              .oneOf([Yup.ref('password'), null], t('WARNING.CONFIRM_PASSWORD_NOT_MATCH')),
+        })
+      }
       validate={(values) => {
         const errors = {} as RegisterFormValue;
-        for (const [key, value] of Object.entries(values)) {
-          // @ts-ignore
-          if (!values[key]) errors[key] = t('THIS_FIELD_IS_REQUIRED');
-        }
 
-        if (values.date) {
-          const diff = Date.now() - new Date(values.date).getTime();
+        if (values.dateOfBirth) {
+          const diff = Date.now() - new Date(values.dateOfBirth).getTime();
           const age = Math.abs(new Date(diff).getUTCFullYear() - 1970);
-          const isMajor = age >= 18;
           if (age < AppConfig.year_min_start) {
-            errors.date = t('AGE_OF_MEMBER_MUST_BE_GREATER_X_YEARS', {AGE: AppConfig.year_min_start});
+            errors.dateOfBirth = t('AGE_OF_MEMBER_MUST_BE_GREATER_X_YEARS', {AGE: AppConfig.year_min_start});
           } else {
-            setMajor(isMajor ? 'major' : 'child');
-            setMaxStep(isMajor ? 1 : 2);
+            setAgeValid(true);
           }
         }
 
         return errors;
       }}
-      onSubmit={(values: RegisterFormValue, {setSubmitting}: FormikHelpers<RegisterFormValue>) => {
-        alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
+      onSubmit={async (values: RegisterFormValue, {setSubmitting, setStatus}: FormikHelpers<RegisterFormValue>) => {
+        await authRegisterRequest(values);
+        // setSubmitting(false);
       }}
     >
       {(formState) => (
         <BaseForm>
-          <BaseHeaderForm currentStep={step} maxStep={maxStep} title={t('SIGN_UP')}
-            subtitle={t('SIGN_UP_TO_CONTINUE')}/>
+          {
+            !true ? <>
+              <BaseHeaderForm title={t('TITLE.SIGN_UP')}
+                subtitle={t('TITLE.SIGN_UP_TO_CONTINUE')}/>
 
-          <div className={'content'}>
-            <FormField
-              required={true}
-              label={isMajor === 'null' ? t('DATE_OF_BIRT_OF_MEMBER') : t(`${typeTrans}_DATE_OF_BIRTH`)}
-              id={'date'}
-              type={'date'}
-              extraClass={formState.errors.date && '!border-warning !focus:border-warning'}
-              error={formState.errors.date}
-            />
-            {
-              isMajor === 'null' && !formState.errors.date &&
-                <FormFeedback message={t('ENTER_A_DATE_OF_BIRTH_TO_START')} type={'info'}/>
-            }
+              <div className="content">
 
-            <div className={'pt-6'}/>
-
-            <div className="flex">
-              <div className="form-group">
                 <FormField
                   required={true}
-                  label={t(`${typeTrans}_LASTNAME`)}
-                  id={'lastname'}
-                  type={'text'}
-                  extraClass={formState.errors.lastname && '!border-warning !focus:border-warning'}
-                  error={formState.errors.lastname}
-                  placeholder={'Freeman'}
+                  label={isAgeValid ? t('YOUR_DATE_OF_BIRTH') : t(`DATE_OF_BIRT_OF_MEMBER`)}
+                  id={'dateOfBirth'}
+                  type={'date'}
+                  extraClass={formState.errors.dateOfBirth && '!border-warning !focus:border-warning'}
+                  error={formState.errors.dateOfBirth}
                 />
+
+                {
+                  !isAgeValid && !formState.errors.dateOfBirth &&
+                      <FormFeedback message={t('ENTER_A_DATE_OF_BIRTH_TO_START')} type={'info'}/>
+                }
+
+                <div className={'py-3'}/>
+
+                <div className="flex">
+                  <div className="form-group">
+                    <FormField
+                      required={true}
+                      label={t(`YOUR_LASTNAME`)}
+                      id={'lastName'}
+                      type={'text'}
+                      extraClass={formState.errors.lastName && '!border-warning !focus:border-warning'}
+                      placeholder={t(`PLACEHOLDER.LASTNAME`)}
+                      error={formState.errors.lastName}
+                    />
+                  </div>
+                  <div className={'mx-2'}/>
+                  <div className="form-group">
+                    <FormField
+                      required={true}
+                      label={t(`YOUR_FIRSTNAME`)}
+                      id={'firstName'}
+                      type={'text'}
+                      extraClass={formState.errors.firstName && '!border-warning !focus:border-warning'}
+                      placeholder={t('PLACEHOLDER.FIRSTNAME')}
+                      error={formState.errors.firstName}
+                    />
+                  </div>
+                </div>
+
+                <div className={'py-3'}/>
+
+                <div className="flex">
+                  <div className="form-group">
+                    <FormField
+                      required={true}
+                      label={t(`YOUR_PHONE_NUMBER`)}
+                      id={'phone'}
+                      type={'tel'}
+                      extraClass={formState.errors.phone && '!border-warning !focus:border-warning'}
+                      placeholder={t(`PLACEHOLDER.PHONE_NUMBER`)}
+                      error={formState.errors.phone}
+                    />
+                  </div>
+                  <div className={'mx-2'}/>
+                  <div className="form-group">
+                    <FormField
+                      required={true}
+                      label={t(`YOUR_EMAIL`)}
+                      id={'email'}
+                      type={'email'}
+                      extraClass={formState.errors.email && '!border-warning !focus:border-warning'}
+                      placeholder={t('PLACEHOLDER.EMAIL')}
+                      error={formState.errors.email}
+                    />
+                  </div>
+                </div>
+
+                <div className={'py-3'}/>
+                <PasswordValidation errors={formState.errors} parentCheckPassword={checkPassword}
+                  values={formState.values}/>
               </div>
-              <div className={'mx-2'}/>
-              <div className="form-group">
-                <FormField
-                  required={true}
-                  label={t(`${typeTrans}_FIRSTNAME`)}
-                  id={'firstname'}
-                  type={'text'}
-                  extraClass={formState.errors.firstname && '!border-warning !focus:border-warning'}
-                  error={formState.errors.firstname}
-                  placeholder={'Morgane'}
-                />
+
+              <div className={'py-3'}/>
+
+              <div className="footer">
+                <ButtonPrimary disabled={!isSecure || Object.keys(formState.errors).length as unknown as boolean}
+                  type={'submit'}>{t('SIGN_IN')}</ButtonPrimary>
               </div>
+            </> :
+            <div className={'text-center'}>
+              <h1 className={'font-bold text-2xl'}>{t('INFO.VERIFY_YOUR_EMAIL')}</h1>
+              <p className={'mt-3 text-sm'}>You will nee to verify your email to complete registration</p>
+              <ButtonPrimary extraClass={'mt-3'}>Renvoyer l'email</ButtonPrimary>
             </div>
-
-            <div className={'pt-6'}/>
-
-            <div className="flex">
-              <div className="form-group">
-                <FormField
-                  required={true}
-                  label={t(`${typeTrans}_PHONE_NUMBER`)}
-                  id={'phoneNumber'}
-                  type={'text'}
-                  extraClass={formState.errors.phoneNumber && '!border-warning !focus:border-warning'}
-                  error={formState.errors.phoneNumber}
-                  placeholder={'3630'}
-                />
-              </div>
-              <div className={'mx-2'}/>
-              <div className="form-group">
-                <FormField
-                  required={true}
-                  label={t(`${typeTrans}_EMAIL`)}
-                  id={'email'}
-                  type={'email'}
-                  extraClass={formState.errors.email && '!border-warning !focus:border-warning'}
-                  error={formState.errors.email}
-                  placeholder={'morgane@freeman.fr'}
-                />
-              </div>
-            </div>
-
-            <div className={'pt-6'}/>
-
-            <div className={'flex'}>
-              <MultiplePassword passwordError={formState.errors.password} confirmPasswordError={formState.errors.confirmPassword}/>
-            </div>
-          </div>
+          }
         </BaseForm>
       )}
     </Formik>

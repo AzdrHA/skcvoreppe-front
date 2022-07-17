@@ -3,6 +3,7 @@ import {ErrorMessage, Field} from 'formik';
 import {FormLabel} from '@app/component/ui/input/FormLabel';
 import {EyeCloseIcon} from '@app/component/icon/EyeCloseIcon';
 import {EyeOpenIcon} from '@app/component/icon/EyeOpenIcon';
+import {FormFeedback} from '@app/component/ui/input/FormFeedback';
 
 export type FormFieldProps = {
   id: string;
@@ -12,8 +13,8 @@ export type FormFieldProps = {
   required?: boolean | undefined;
   icon?: JSX.Element | undefined;
   extraClass?: string | undefined;
+  onClick?: any | undefined;
   error?: string | undefined;
-  onClick?: any | undefined
 }
 
 export const FormField: FC<FormFieldProps> = (props: FormFieldProps) => {
@@ -53,11 +54,13 @@ export const FormField: FC<FormFieldProps> = (props: FormFieldProps) => {
             </button> : null
         }
       </div>
-      <ErrorMessage
-        name={props.id}
-        component="small"
-        className="text-xs block font-medium mt-1 text-warning"
-      />
+      {
+        props.error ? <FormFeedback message={props.error} type={'warning'}/> : <ErrorMessage
+          name={props.id}
+          component="small"
+          className="text-xs block font-medium mt-1 text-warning"
+        />
+      }
     </>
   );
 };

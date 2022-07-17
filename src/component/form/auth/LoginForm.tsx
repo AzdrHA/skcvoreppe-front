@@ -17,6 +17,7 @@ import Cookies from 'js-cookie';
 import {cookieExpiredAt} from '@app/utils/constante';
 import {useAppDispatch} from '@app/reducer/hook';
 import {initialUser} from '@app/slice/User/UserSlice';
+import {useLocation} from 'react-router';
 
 export type LoginFormValues = {
   email?: string | undefined;
@@ -30,6 +31,7 @@ export const LoginForm = () => {
   const {t} = useTranslation(['form']);
   const [searchParams, setSearchParams] = useSearchParams({type: LoginAreaTypeEnum.MEMBER});
   const navigate = useNavigate();
+  const location = useLocation() as {state: {redirectTo: string}};
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -47,6 +49,9 @@ export const LoginForm = () => {
       setErrors({error: e.response.data.error});
     }).finally(() => {
       setSubmitting(false);
+      if (location.state.redirectTo) {
+        return navigate(location.state.redirectTo);
+      }
       if (values.type === LoginAreaTypeEnum.ADMIN) {
         return navigate(routes.admin.home);
       }

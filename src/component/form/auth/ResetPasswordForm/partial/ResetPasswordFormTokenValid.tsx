@@ -32,7 +32,7 @@ export const ResetPasswordFormTokenValid = () => {
     values.token = searchParams.get('token') as string;
     values.type = searchParams.get('type') as string;
     authResetPasswordRequest(values).then((r) => {
-      setStatus({status: t('RESET_PASSWORD_SUCCESS', {
+      setStatus({status: t('INFO.RESET_PASSWORD_SUCCESS', {
         SECOND: REDIRECT_TIME,
       })});
       setTimeout(() => {
@@ -51,9 +51,9 @@ export const ResetPasswordFormTokenValid = () => {
       validationSchema={
         Yup.object().shape({
           password: Yup.string()
-              .required(t('THIS_FIELD_IS_REQUIRED')),
-          confirmPassword: Yup.string().required(t('THIS_FIELD_IS_REQUIRED'))
-              .oneOf([Yup.ref('password'), null], t('CONFIRM_PASSWORD_NOT_MATCH')),
+              .required(t('WARNING.THIS_FIELD_IS_REQUIRED')),
+          confirmPassword: Yup.string().required(t('WARNING.THIS_FIELD_IS_REQUIRED'))
+              .oneOf([Yup.ref('password'), null], t('WARNING.CONFIRM_PASSWORD_NOT_MATCH')),
         })
       }
     >
@@ -69,6 +69,7 @@ export const ResetPasswordFormTokenValid = () => {
                 required={true}
                 label={t('NEW_PASSWORD')}
                 placeholder={t('PLACEHOLDER.PASSWORD')}
+                extraClass={formState.errors.password && '!border-warning !focus:border-warning'}
               />
             </div>
 
@@ -82,6 +83,8 @@ export const ResetPasswordFormTokenValid = () => {
                 required={true}
                 label={t('CONFIRM_NEW_PASSWORD')}
                 placeholder={t('PLACEHOLDER.PASSWORD')}
+                extraClass={formState.errors.confirmPassword && '!border-warning !focus:border-warning'}
+
               />
             </div>
           </div>

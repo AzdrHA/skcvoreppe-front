@@ -3,12 +3,8 @@
   "PAGE_DOES_NOT_LOAD": "Oups votre page ne charge pas.",
   "DONT_WORRY_WE_WILL_SHOW_YOU_ANOTHER_WAY": "Pas d’inquiétude, nous allons vous indiquez un autre chemin.",
 
-  "SIGN_UP_TO_CONTINUE": "Inscrivez-vous pour continuer",
-  "SIGN_UP": "Inscription",
-
   "REGISTER_PASSWORD": "Votre mot de passe",
   "REGISTER_CONFIRM_PASSWORD": "Confirmez votre mot de passe",
-  "ENTER_A_DATE_OF_BIRTH_TO_START": "Renseigner une date de naissance pour commencer. Si l'adhérent est mineur, le formulaire sera découpé en 2 étapes, une partie pour l'enfant et l'autre pour le responsable légal.",
   "FIRSTNAME": "Prenom",
   "LASTNAME": "Nom",
   "PHONE_NUMBER": "N° de téléphone",
@@ -16,32 +12,7 @@
   "HOLD_UP": "Attendez !",
   "ACCESS_NOT_ALLOWED": "Vous n'êtes pas autorisé à rentrer dans cette zone !",
 
-  "YOUR_DATE_OF_BIRTH": "Votre Date de naissance",
-  "YOUR_LASTNAME": "Votre nom",
-  "YOUR_FIRSTNAME": "Votre prénom",
-  "YOUR_PHONE_NUMBER": "Votre numéro de téléphone",
-  "YOUR_EMAIL": "Votre addresse mail",
-  "YOUR_GENDER": "Votre genre",
-
-  "PARENT_DATE_OF_BIRTH": "Votre Date de naissance",
-  "PARENT_LASTNAME": "PARENT_LASTNAME",
-  "PARENT_FIRSTNAME": "PARENT_FIRSTNAME",
-  "PARENT_PHONE_NUMBER": "PARENT_PHONE_NUMBER",
-  "PARENT_EMAIL": "PARENT_EMAIL",
-  "PARENT_GENDER":"PARENT_GENDER",
-
-  "CHILD_DATE_OF_BIRTH": "Date de naissance de l'enfant",
-  "CHILD_LASTNAME": "Nom de l'enfant",
-  "CHILD_FIRSTNAME": "Prenom de l'enfant",
-  "CHILD_PHONE_NUMBER": "N° de téléphone de l'enfant",
-  "CHILD_EMAIL": "Adresse mail de l'enfant",
-  "CHILD_GENDER": "Genre de l'enfant",
-
-  "DATE_OF_BIRT_OF_MEMBER": "Date de naissance du nouveau adhérent",
-  "AGE_OF_MEMBER_MUST_BE_GREATER_X_YEARS": "L'âge de l'adhérent doit être supérieur à {{AGE}} ans",
-
   "THIS_FIELD_IS_REQUIRED": "Ce champ doit être renseigné",
-  "ENTER_A_VALID_EMAIL": "Veuillez saisir une adresse électronique valide.",
 
   "UPDATE": "Modifier",
 

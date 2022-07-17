@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {useLocation} from 'react-router';
+import {useLocation, useRoutes} from 'react-router';
 import {RootState} from '@app/reducer/store';
 import {useAppSelector} from '@app/reducer/hook';
 import {useNavigate} from 'react-router-dom';
@@ -18,15 +18,20 @@ export const PrivateRouter: FC<PrivateRouterProps> = (props: PrivateRouterProps)
   const [isAuthorized, setAuthorized] = useState(false);
   const user = useAppSelector((state: RootState) => state.user);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const routeAccess = (userRole: string) => {
     return (adminRole.includes(props.role) && adminRole.includes(userRole)) && adminRole.indexOf(props.role) < adminRole.indexOf(userRole);
   };
 
   useEffect(() => {
-    console.log(user);
     if (!Object.keys(user).length) {
-      return navigate(routes.login);
+      return navigate(routes.login, {
+        state: {
+          withRedirection: true,
+          redirectTo: location.pathname,
+        },
+      });
     }
     if ((user && user.role) && routeAccess(user.role)) {
       setAuthorized(true);

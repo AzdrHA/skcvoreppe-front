@@ -9,6 +9,7 @@ export const routes = {
   forgotPassword: home.concat('mot-de-passe-oublie'),
   resetPassword: home.concat('reinitialisation-de-mot-de-passe'),
   changePassword: home.concat('modifer-le-mot-de-passe-oublie'),
+  validAccount: home.concat('valider-mon-compte'),
   auth: {
     base: authRoute,
   },

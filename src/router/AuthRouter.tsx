@@ -7,6 +7,7 @@ import {ResetPasswordScreen} from '@screens/Auth/ResetPasswordScreen';
 import {ChangePasswordScreen} from '@screens/Auth/ChangePasswordScreen';
 import {NotFound} from '@screens/Exception/NotFound';
 import {RegisterScreen} from '@screens/Auth/RegisterScreen';
+import {ValidAccountScreen} from '@screens/Auth/ValidAccountScreen';
 
 export const AuthRouter = () => {
   return <Routes>
@@ -16,5 +17,6 @@ export const AuthRouter = () => {
     <Route path={routes.forgotPassword} element={<ForgotPasswordScreen/>}/>
     <Route path={routes.resetPassword} element={<ResetPasswordScreen/>}/>
     <Route path={routes.changePassword} element={<ChangePasswordScreen/>}/>
+    <Route path={routes.validAccount} element={<ValidAccountScreen/>}/>
   </Routes>;
 };

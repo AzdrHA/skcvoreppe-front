@@ -7,29 +7,42 @@
     "LOGIN_TO_CONTINUE": "Connectez-vous pour continuer",
 
     "RESET_PASSWORD": "Réinitialisation de mon mot de passe",
-    "RESET_PASSWORD_MUST_BE_DIFFERENT": "Votre nouveau mot de passe doit être différent de l’ancien mot de passe"
+    "RESET_PASSWORD_MUST_BE_DIFFERENT": "Votre nouveau mot de passe doit être différent de l’ancien mot de passe",
+
+    "SIGN_UP_TO_CONTINUE": "Inscrivez-vous pour continuer",
+    "SIGN_UP": "Inscription"
   },
 
   "INFO": {
-    "RESET_PASSWORD_REQUEST_SEND": "La demande de réinstallation bien était prise en compte, vous recevrez un mail incessamment sous peu."
-  },
+    "RESET_PASSWORD_REQUEST_SEND": "La demande de réinstallation bien était prise en compte, vous recevrez un mail incessamment sous peu.",
+    "RESET_PASSWORD_SUCCESS": "Le mot de passe a été modifier avec succès, vous allez rediriger automatique dans {{SECOND}} secondes.",
+    "SEND_MAIL_VALIDATION": "Un e-mail de validation de compte a été envoyé sur l'adresse mail renseigné précédemment.",
 
-  "THIS_FIELD_IS_REQUIRED": "Ce champ doit être renseigné",
-  "CONFIRM_PASSWORD_NOT_MATCH": "La confirmation de mot de passe ne concorde pas avec le nouveau mot de passe",
+    "VERIFY_YOUR_EMAIL": "Vérifiez votre e-mail"
+  },
 
   "PLACEHOLDER": {
     "EMAIL": "exemple@exemple.com",
-    "PASSWORD": "•••••••••••••••••••••"
+    "PASSWORD": "•••••••••••••••••••••",
+    "LASTNAME": "Freeman",
+    "FIRSTNAME": "Morgane",
+    "PHONE_NUMBER": "+33 6 51"
+  },
+
+  "WARNING": {
+    "ENTER_A_VALID_EMAIL": "Veuillez saisir une adresse électronique valide.",
+    "THIS_FIELD_IS_REQUIRED": "Ce champ doit être renseigné",
+    "CONFIRM_PASSWORD_NOT_MATCH": "La confirmation de mot de passe ne concorde pas avec le nouveau mot de passe"
   },
 
   "PASSWORD_SECURE_INFO": "Pour votre sécurité votre mot de passe doit remplir les critères suivants:",
 
-  "RESET_PASSWORD_SUCCESS": "Le mot de passe a été modifier avec succès, vous allez rediriger automatique dans {{SECOND}} secondes.",
 
   "EMAIL": "Adresse mail",
   "RESET": "Réinitialiser",
   "REMEMBER_ME": "Se souvenir de moi",
   "LOG_IN": "Se connecter",
+  "SIGN_IN": "S'enregister",
   "FORGOT_PASSWORD": "Mot de passe oublié ?",
   "AREA_MEMBER": "Espace Adhérant",
   "AREA_ADMIN": "Espace Administrateur",
@@ -38,5 +51,25 @@
   "NEW_PASSWORD": "Nouveau mot de passe",
   "CONFIRM_NEW_PASSWORD": "Confirmer le nouveau mot de passe",
 
-  "UPDATE_THE_PASSWORD": "Modifier le mot de passe"
+  "UPDATE_THE_PASSWORD": "Modifier le mot de passe",
+
+  "DATE_OF_BIRT_OF_MEMBER": "Date de naissance du nouveau adhérent",
+  "AGE_OF_MEMBER_MUST_BE_GREATER_X_YEARS": "L'âge de l'adhérent doit être supérieur à {{AGE}} ans",
+
+  "ENTER_A_DATE_OF_BIRTH_TO_START": "Renseigner une date de naissance pour commencer.",
+  "YOUR_DATE_OF_BIRTH": "Votre Date de naissance",
+  "YOUR_LASTNAME": "Votre nom",
+  "YOUR_FIRSTNAME": "Votre prénom",
+  "YOUR_PHONE_NUMBER": "Votre numéro de téléphone",
+  "YOUR_EMAIL": "Votre addresse mail",
+  "YOUR_GENDER": "Votre genre",
+
+  "MIN_X_CHARACTER_one": "Minimum {{count}} caractère",
+  "MIN_X_CHARACTER_other": "Minimum {{count}} caractères",
+  "MIN_X_LOWERCASE_one": "{{count}} Minuscule",
+  "MIN_X_LOWERCASE_other": "{{count}} Minuscules",
+  "MIN_X_UPPERCASE_one": "{{count}} Majuscule",
+  "MIN_X_UPPERCASE_other": "{{count}} Majuscules",
+  "MIN_X_NUMBER_one": "{{count}} Chiffre",
+  "MIN_X_NUMBER_other": "{{count}} Chiffres"
 }

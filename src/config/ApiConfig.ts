@@ -6,5 +6,6 @@ export const ApiConfig = {
     refreshToken: '/auth/refresh',
     verifyToken: '/auth/verify-token',
     resetPassword: '/auth/reset-password',
+    register: '/auth/register',
   },
 };

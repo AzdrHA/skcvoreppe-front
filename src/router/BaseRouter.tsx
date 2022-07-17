@@ -10,6 +10,7 @@ import Cookies from 'js-cookie';
 import {adminRole, cookieExpiredAt} from '@app/utils/constante';
 import {useAppDispatch} from '@app/reducer/hook';
 import {initialUser} from '@app/slice/User/UserSlice';
+import {CheckoutScreen} from '@screens/CheckoutScreen';
 
 export const BaseRouter = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +28,7 @@ export const BaseRouter = () => {
   return (
     loading ? <>LOADING</> : <Routes>
       <Route path={'*'} element={<AuthRouter/>} />
+      <Route path={'/paiement'} element={<CheckoutScreen/>} />
       <Route path={routes.home} element={<HomeScreen/>}/>
       <Route path={routes.admin.base+'/*'} element={
         <PrivateRouter role={'ROLE_ADMIN'}>

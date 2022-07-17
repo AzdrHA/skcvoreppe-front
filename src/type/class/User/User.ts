@@ -1,12 +1,13 @@
 export interface User {
-  id: number
+  id: number;
 
-  email: string
-  firstname: string
-  lastname: string
-  role: string
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
 
-  lastLoginAt: Date
+  dateOfBirth: Date;
+  lastLoginAt: Date;
   createdAt: Date;
-  updateAt: Date
+  updateAt: Date;
 }
