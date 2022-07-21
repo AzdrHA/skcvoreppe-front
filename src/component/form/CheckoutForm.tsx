@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useStripe, useElements, PaymentElement} from '@stripe/react-stripe-js';
 
-export const CheckoutForm = () => {
+export const CheckoutForm = (props: {amount_subtotal: number, amount_total:number}) => {
+  const [data, setData] = useState();
   const stripe = useStripe();
   const elements = useElements();
+
+  console.log(stripe);
+  console.log(elements);
 
   const handleSubmit = async (event: any) => {
     // We don't want to let default form submission happen here,
@@ -36,6 +40,7 @@ export const CheckoutForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {props.amount_subtotal/100}
       <PaymentElement />
       <button disabled={!stripe}>Submit</button>
     </form>

@@ -8,4 +8,7 @@ export const ApiConfig = {
     resetPassword: '/auth/reset-password',
     register: '/auth/register',
   },
+  order: {
+    checkout: '/order/:id/checkout',
+  },
 };

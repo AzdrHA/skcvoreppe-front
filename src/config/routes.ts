@@ -3,13 +3,14 @@ const authRoute = '/auth';
 const adminRoute = '/admin';
 
 export const routes = {
-  home: home,
-  login: home.concat('connexion'),
-  register: home.concat('inscription'),
-  forgotPassword: home.concat('mot-de-passe-oublie'),
-  resetPassword: home.concat('reinitialisation-de-mot-de-passe'),
-  changePassword: home.concat('modifer-le-mot-de-passe-oublie'),
-  validAccount: home.concat('valider-mon-compte'),
+  home: '/',
+  login: '/connexion',
+  register: '/inscription',
+  forgotPassword: '/mot-de-passe-oublie',
+  resetPassword: '/reinitialisation-de-mot-de-passe',
+  changePassword: '/modifer-le-mot-de-passe-oublie',
+  validAccount: '/valider-mon-compte',
+  checkout: '/payment',
   auth: {
     base: authRoute,
   },

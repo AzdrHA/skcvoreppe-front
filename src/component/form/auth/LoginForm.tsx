@@ -31,7 +31,7 @@ export const LoginForm = () => {
   const {t} = useTranslation(['form']);
   const [searchParams, setSearchParams] = useSearchParams({type: LoginAreaTypeEnum.MEMBER});
   const navigate = useNavigate();
-  const location = useLocation() as {state: {redirectTo: string}};
+  const location = useLocation() as {state?: {redirectTo: string}};
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export const LoginForm = () => {
       setErrors({error: e.response.data.error});
     }).finally(() => {
       setSubmitting(false);
-      if (location.state.redirectTo) {
+      if (location.state && location.state.redirectTo) {
         return navigate(location.state.redirectTo);
       }
       if (values.type === LoginAreaTypeEnum.ADMIN) {
